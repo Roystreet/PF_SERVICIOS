@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Roystreet/PF_SERVICIOS/issues"
   },
-  "homepage": "https://github.com/Roystreet/PF_SERVICIOS#readme"
+  "homepage": "https://github.com/Roystreet/PF_SERVICIOS#readme",
+  "dependencies": {
+    "dotenv": "^14.1.0",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0"
+  }
 }
