@@ -1,5 +1,5 @@
 const app = require("./app");
-const sequelize = require("./database");
+const sequelize = require("./Database");
 
 app.listen(app.get("PORT"), async () => {
   try {

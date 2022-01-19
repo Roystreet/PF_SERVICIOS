@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const sequelize = require("../Database");
 
 sequelize.define("country", {
   name: {
@@ -59,7 +59,31 @@ sequelize.define("post", {
   },
 });
 
-const { user, post, country } = sequelize.models;
+sequelize.define("product", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: null,
+  },
+  price: {
+    type: DataTypes.DECIMAL,
+    allowNull: false,
+  },
+  stock: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  status: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+});
+
+const { user, post, country, product } = sequelize.models;
+
 country.hasMany(user, {
   foreignKey: "countryId",
 });
@@ -69,6 +93,11 @@ user.hasMany(post, {
   foreignKey: "userId",
 });
 post.belongsTo(user);
+
+user.hasMany(product, {
+  foreignKey: "productId",
+});
+product.belongsTo(user);
 
 module.exports = {
   ...sequelize.models,
