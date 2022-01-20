@@ -1,6 +1,7 @@
 const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
 const Country = require("../Models/Country");
+const Product = require("../Models/Product")
 
 const User = sequelize.define("user", {
   first_name: {
