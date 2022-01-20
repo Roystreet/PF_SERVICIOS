@@ -15,6 +15,7 @@ const postCategory = async (req, res, next) => {
   try {
     const { category } = req.body;
     await Category.create({ name: category });
+    res.status(200).json({ msg: " Create successfully" });
   } catch (err) {
     console.error(err);
   }
@@ -22,8 +23,8 @@ const postCategory = async (req, res, next) => {
 const deleteCategory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const data = Category.findById(parseInt(id));
-    if (data) {
+    const data = Category.findByPk(parseInt(id));
+    if (data.name) {
       await Category.destroy({
         where: {
           id: id,
