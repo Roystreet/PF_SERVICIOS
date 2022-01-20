@@ -14,8 +14,3 @@ User.hasMany(Post, {
   foreignKey: "userId",
 });
 Post.belongsTo(User);
-
-User.hasMany(Product, {
-  foreignKey: "userId",
-});
-Product.belongsTo(User);

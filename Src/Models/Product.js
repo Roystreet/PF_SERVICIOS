@@ -1,6 +1,6 @@
 const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
-
+const User = require('./User.js')
 const Product = sequelize.define("product", {
   name: {
     type: DataTypes.STRING,
@@ -23,5 +23,8 @@ const Product = sequelize.define("product", {
     defaultValue: true,
   },
 });
-
+User.hasMany(Product, {
+  foreignKey: "userId",
+});
+Product.belongsTo(User);
 module.exports = Product;
