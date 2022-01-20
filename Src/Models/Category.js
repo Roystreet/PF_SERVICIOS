@@ -1,5 +1,6 @@
 const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
+const Product = require("./Product");
 
 const Category = sequelize.define("category", {
   name: {
@@ -7,7 +8,5 @@ const Category = sequelize.define("category", {
     allowNull: false,
   },
 });
-
-// Relacion de categorias
 
 module.exports = Category;
