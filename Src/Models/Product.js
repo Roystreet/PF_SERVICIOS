@@ -24,5 +24,8 @@ const Product = sequelize.define("product", {
     defaultValue: true,
   },
 });
-
+User.hasMany(Product, {
+  foreignKey: "userId",
+});
+Product.belongsTo(User);
 module.exports = Product;

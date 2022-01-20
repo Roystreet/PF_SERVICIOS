@@ -12,19 +12,28 @@ const {
   deleteUser,
   createUsers,
 } = require("../Controllers/UserControllers");
-const {} = require("../Controllers/ProductControllers");
 
+
+const {
+  getProducts,
+  postProduct,
+  getProductById,
+  updateProduct,
+  deleteProduct
+} = require('../Controllers/ProductControllers/index');
 const {
   getCategories,
   postCategory,
   deleteCategory,
 } = require("../Controllers/CategoryControllers");
 
+
 // Posts
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
 router.get("/post/:user", getPostUsers);
 router.delete("/post/:user", deletePosts);
+
 //Users
 router.post("/register", createUsers);
 router.get("/users", getUsers);
@@ -33,12 +42,14 @@ router.delete("/user/:id", deleteUser);
 router.post("/user/restore");
 router.put("/user/:id");
 router.post("/login");
+
 //Products
 router.get("/products?name");
-router.get("/products");
-router.post("/products");
-router.put("/products/id");
-router.delete("/prodcts/:id");
+router.get("/products", getProducts);
+router.post("/product", postProduct);
+router.put("/product", updateProduct);
+router.delete("/product/:id", deleteProduct);
+
 // Category
 router.get("/category", getCategories);
 router.post("/category", postCategory);

@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+
 const sequelize = require("../Database");
 const Product = require("./Product.js");
 const Country = require("./Country.js");
@@ -14,7 +14,7 @@ User.hasMany(Post, {
   foreignKey: "userId",
 });
 Post.belongsTo(User);
-//
+
 User.hasMany(Product, {
   foreignKey: "userId",
 });
