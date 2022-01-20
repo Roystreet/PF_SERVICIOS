@@ -14,6 +14,12 @@ const {
 } = require("../Controllers/UserControllers");
 const {} = require("../Controllers/ProductControllers");
 
+const {
+  getCategories,
+  postCategory,
+  deleteCategory,
+} = require("../Controllers/CategoryControllers");
+
 // Posts
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
@@ -33,7 +39,12 @@ router.get("/products");
 router.post("/products");
 router.put("/products/id");
 router.delete("/prodcts/:id");
+// Category
+router.get("/category", getCategories);
+router.post("/category", postCategory);
+router.delete("/category/:id", deleteCategory);
 // Ruta para destruir sesión
 router.get("/lagout");
+//
 
 module.exports = router;
