@@ -14,9 +14,7 @@ User.hasMany(Post, {
   foreignKey: "userId",
 });
 Post.belongsTo(User);
-<<<<<<< HEAD
-=======
-//
+
 User.hasMany(Product, {
   foreignKey: "userId",
 });
@@ -25,4 +23,3 @@ Product.belongsTo(User);
 module.exports = {
   ...sequelize.models,
 };
->>>>>>> 6225b65f6afbe38a2cae67e07a2070696f5c98d8

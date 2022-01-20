@@ -39,10 +39,10 @@ router.post("/login");
 
 //Products
 router.get("/products?name");
-router.get("/products");
-router.post("/products");
-router.put("/products/id");
-router.delete("/prodcts/:id");
+router.get("/products", getProducts);
+router.post("/product", postProduct);
+router.put("/product", updateProduct);
+router.delete("/product/:id", deleteProduct);
 // Ruta para destruir sesión
 router.get("/lagout");
 
