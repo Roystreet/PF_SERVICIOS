@@ -6,7 +6,11 @@ const {
   deletePosts,
 } = require("../Controllers/PostControllers");
 
-const { getUsers, getUsersById } = require("../Controllers/UserControllers");
+const {
+  getUsers,
+  getUsersById,
+  deleteUser,
+} = require("../Controllers/UserControllers");
 const {} = require("../Controllers/ProductControllers");
 
 // Posts
@@ -19,7 +23,7 @@ router.post("/users");
 router.get("/users", getUsers);
 router.get("/user", getUsersById);
 router.post("/user/restore");
-router.delete("/user");
+router.delete("/user/:id", deleteUser);
 router.put("/user/:id");
 
 //Products
