@@ -1,13 +1,16 @@
 
 let Product =require('../../Models/Product')
 let User =require('../../Models/User')
-
+let Category = require('../../Models/Category')
 
 
 async function getProducts (req, res){
 
     try {
-     let products = await Product.findAll({limit:15})
+     let products = await Product.findAll({
+       limit:15,
+       include:Category
+      })
      res.json(products)
 
     } catch (error) {
@@ -20,7 +23,9 @@ async function getProducts (req, res){
 async function getProductById(req,res) {
   try {
     let {id} = req.params
-    let foundProduct= await Product.findByPk(id)
+    let foundProduct= await Product.findByPk(id,{
+      include: Category
+    })
     res.json(foundProduct)
   } catch (err) {
     console.log(err)

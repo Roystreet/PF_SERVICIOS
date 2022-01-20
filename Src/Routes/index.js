@@ -12,7 +12,7 @@ const {
   deleteUser,
   createUsers,
 } = require("../Controllers/UserControllers");
-const {} = require("../Controllers/ProductControllers");
+
 
 const {
   getProducts,

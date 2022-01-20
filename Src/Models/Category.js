@@ -8,4 +8,7 @@ const Category = sequelize.define("category", {
   },
 });
 
+Product.belongsToMany(Category, { through:'Product_Category'})
+Category.belongsToMany(Product, { through:'Product_Category'})
+
 module.exports = Category;
