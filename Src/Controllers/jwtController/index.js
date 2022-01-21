@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
+//user debe ser un objeto con el id del usuario y el rol
 function generateToken(user) {
-	return jwt.sign({ name: user.given_name, lastName: user.family_name }, process.env.JWT_SECRET, { expiresIn: '3h' });
+	return jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '3h' });
 }
 
 //verifyToken devuelve false si el token no es valido o true si la verificación es válida
