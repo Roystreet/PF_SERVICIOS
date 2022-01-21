@@ -44,7 +44,7 @@ router.put("/user/:id");
 router.post("/login");
 
 //Products
-router.get("/products?name");
+router.get("/products?name", getProducts);
 router.get("/products", getProducts);
 router.post("/product", postProduct);
 router.put("/product", updateProduct);
