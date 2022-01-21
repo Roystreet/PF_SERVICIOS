@@ -57,7 +57,7 @@ router.delete("/category/:id", deleteCategory);
 // Ruta para destruir sesión
 router.get("/lagout");
 //Orders
-router.get("/order", getOrders);
+router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
 
 module.exports = router;
