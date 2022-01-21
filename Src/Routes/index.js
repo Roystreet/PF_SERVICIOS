@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { getPosts, getPostUsers, updatePosts, deletePosts, createPosts } = require('../Controllers/PostControllers');
 
 const { getUsers, getUsersById, deleteUser, createUsers } = require('../Controllers/UserControllers');
-
+const {getCountries} = require('../Controllers/CountryControllers/index')
 const {
 	getProducts,
 	postProduct,
@@ -57,3 +57,7 @@ router.get('/', async (req, res) => {
 	res.status(200).json(await User.findAll({ include: [ Product, Post ] }));
 });
 module.exports = router;
+
+
+//counties
+router.get('/countries', getCountries);
