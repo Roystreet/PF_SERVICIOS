@@ -31,8 +31,8 @@ const { getOrders, getOrderId } = require("../Controllers/OrderControllers");
 // Posts
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
-router.get("/post/:user", getPostUsers);
-router.delete("/post/:user", deletePosts);
+router.get("/post/:id", getPostUsers);
+router.delete("/post/:id", deletePosts);
 
 //Users
 router.post("/register", createUsers);
@@ -59,5 +59,6 @@ router.get("/lagout");
 //Orders
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
+router.post("/order");
 
 module.exports = router;
