@@ -3,10 +3,8 @@ const Category = require("../../Models/Category");
 const getCategories = async (req, res, next) => {
   try {
     const category = await Category.findAll();
-    const data = category.map((data) => {
-      return data.name;
-    });
-    res.status(200).json(data);
+
+    res.status(200).json(category);
   } catch (err) {
     console.error(err);
   }
