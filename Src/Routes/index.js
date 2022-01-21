@@ -13,20 +13,20 @@ const {
   createUsers,
 } = require("../Controllers/UserControllers");
 
-
 const {
   getProducts,
   postProduct,
   getProductById,
   updateProduct,
-  deleteProduct
-} = require('../Controllers/ProductControllers/index');
+  deleteProduct,
+} = require("../Controllers/ProductControllers/index");
 const {
   getCategories,
   postCategory,
   deleteCategory,
 } = require("../Controllers/CategoryControllers");
 
+const { getOrders, getOrderId } = require("../Controllers/OrderControllers");
 
 // Posts
 router.get("/post", getPosts);
@@ -56,6 +56,8 @@ router.post("/category", postCategory);
 router.delete("/category/:id", deleteCategory);
 // Ruta para destruir sesión
 router.get("/lagout");
-//
+//Orders
+router.get("/orders", getOrders);
+router.get("/order/:id", getOrderId);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
+const User = require("../Models/User");
 const Post = sequelize.define("post", {
   title: {
     type: DataTypes.TEXT,
@@ -20,5 +21,10 @@ const Post = sequelize.define("post", {
     },
   },
 });
+
+User.hasMany(Post, {
+  foreignKey: "userId",
+});
+Post.belongsTo(User);
 
 module.exports = Post;
