@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+//al recibir los datos del login *usuario* *contraseña* se verifica que el usuario exista en la base de datos
+//y que la contraseña sea correcta (encriptada) y se genera un token de acceso (generateToken) que se devuelve al cliente
+//para que sea guardada en el local storage del navegador
 
 //user debe ser un objeto con el id del usuario y el rol
 function generateToken(user) {
@@ -12,19 +15,28 @@ function verifyToken(token) {
 	});
 }
 
+//el usuario al entrar a una ruta protegida debe devolver un token de acceso en la cabecera con el nombre de "token"
+
 const jwtMiddleware = (req, res, next) => {
-	const token = req.headers['authorization'];
+	//recibiendo el token de la cabecera
+	const token = req.headers['token'];
 	if (token) {
+		//verificando que el token sea correcto
 		const verified = verifyToken(token);
+
 		if (verified) {
+			//si la verificación es correcta se pasa al siguiente middleware
 			next();
+			//la ruta debe tener esta form router.get("/rutaprotegida",jwtMiddleware,(req,res)=>{...})
+			//al ejecutar next(),el usuario podrá acceder a la ruta
 		} else {
+			//si el token no se puede verificar, se devuelve un error
 			res.status(401).json({ msg: 'Invalid token' });
 			return false;
 		}
 	} else {
+		//si el token no existe, se devuelve un error
 		res.status(401).json({ msg: 'no have token' });
-
 		return false;
 	}
 };
