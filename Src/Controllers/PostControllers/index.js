@@ -1,4 +1,5 @@
 const Post = require('../../Models/Post');
+const Product = require('../../Models/Product');
 const User = require('../../Models/User');
 
 const getPosts = async (req, res, next) => {
@@ -12,8 +13,33 @@ const getPosts = async (req, res, next) => {
 		return;
 	}
 };
+const createPosts = async (req, res, next) => {
+	//forma json recibido {userId:?????,title:STRING,description:STRING,status:BOOLEAN,stock:NUMBER}
+	//id del producto
+	const { id } = req.params;
+	//debe recibir req.body.userId
+	try {
+		const datadFound = await Product.findByPk(id);
+		if (datadFound) {
+			await Post.create({
+				title: req.body.title,
+				description: req.body.description,
+				productId: id,
+				userId: req.body.userId,
+				stock: req.body.stock,
+				status: req.body.status
+			});
+			res.status(200).json({ msg: 'post created' });
+			return;
+		}
+		res.status(400).json({ msg: 'product not found' });
+	} catch (error) {
+		console.log(error);
+		res.status(400).json({ msg: error });
+	}
+};
 const getPostUsers = async (req, res, next) => {
-	const params = req.params;
+	const params = req.params.user;
 	try {
 		const dataFound = await Post.findAll({
 			include: {
@@ -26,15 +52,16 @@ const getPostUsers = async (req, res, next) => {
 		res.status(200).json(dataFound);
 		return;
 	} catch (error) {
-		res.status(500).json();
 		console.log('Error: ', Error);
+
+		res.status(400).json();
 	}
 };
 const updatePosts = async (req, res, next) => {
 	try {
 		//asumiendo una llave primaria id
 		//body tendrá la forma {title:STRING,description:STRING,status:STRING,stock:NUMBER}
-		const updateData = req.body.data;
+		const updateData = req.body;
 		const pk = req.body.id;
 		const datFound = await Post.findByPk(pk);
 		if (datFound) {
@@ -42,7 +69,7 @@ const updatePosts = async (req, res, next) => {
 			res.status(200).json({ msg: 'post update' });
 			return;
 		} else {
-			res.status(400).json({ msg: 'el producto no existe' });
+			res.status(400).json({ msg: 'el post no existe' });
 		}
 	} catch (error) {
 		console.log(error);
@@ -52,8 +79,9 @@ const updatePosts = async (req, res, next) => {
 
 const deletePosts = async (req, res, next) => {
 	//asumiendo llave primaria id
+	const pk = req.params.user;
+	console.log(pk);
 	try {
-		const pk = req.body.pk;
 		const datFound = await Post.findByPk(pk);
 		if (datFound) {
 			datFound.destroy();
@@ -71,5 +99,6 @@ module.exports = {
 	getPosts,
 	getPostUsers,
 	updatePosts,
-	deletePosts
+	deletePosts,
+	createPosts
 };
