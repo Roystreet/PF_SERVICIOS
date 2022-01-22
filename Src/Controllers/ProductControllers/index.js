@@ -1,6 +1,7 @@
 let Product = require("../../Models/Product");
 let User = require("../../Models/User");
 let Category = require("../../Models/Category");
+let Image = require("../../Models/Image");
 const { Op } = require("sequelize");
 
 async function getProducts(req, res) {
@@ -17,7 +18,7 @@ async function getProducts(req, res) {
       return res.json(products);
     }
     let products = await Product.findAll({
-      limit: 15,
+      limit: 100,
       include: Category,
     });
     res.json(products);
@@ -44,6 +45,13 @@ async function postProduct(req, res) {
     let addedProduct = await Product.create({
       ...product,
     });
+    let addingImages = product.images.map(link=>{
+          return Image.create({
+            link:link,
+            productId:addedProduct.id
+          })
+    })
+    await Promise.all(addingImages)
     res.status(201).json(addedProduct);
   } catch (err) {
     res.status(400).send("error. Verify request data");
