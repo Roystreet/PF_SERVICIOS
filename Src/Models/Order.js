@@ -10,4 +10,6 @@ const Order = sequelize.define("order", {
   },
 });
 
+Product.hasMany;
+
 module.exports = Order;
