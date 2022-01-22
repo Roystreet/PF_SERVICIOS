@@ -28,7 +28,7 @@ const {
 } = require("../Controllers/CategoryControllers");
 
 const { getOrders, getOrderId } = require("../Controllers/OrderControllers");
-
+const {getCountries} = require("../Controllers/CountryControllers");
 // Posts
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
@@ -61,5 +61,7 @@ router.get("/lagout");
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
 router.post("/order");
+//counrties
+router.get('/countries', getCountries)
 
 module.exports = router;
