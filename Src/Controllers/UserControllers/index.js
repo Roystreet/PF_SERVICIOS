@@ -1,6 +1,9 @@
 // Users
 const User = require("../../Models/User");
 const Country = require("../../Models/Country");
+const bcrypt = require("bcrypt");
+const saltRound = 10;
+const salt = bcrypt.genSaltSync(saltRound);
 
 const getUsers = async (req, res) => {
   const users = await User.findAll({
@@ -36,6 +39,8 @@ const createUsers = async (req, res) => {
       password,
     } = req.body;
 
+    const hashPassword = await bcrypt.hashSync(password, salt);
+
     const user = await User.create({
       username: username,
       first_name: first_name,
@@ -43,7 +48,7 @@ const createUsers = async (req, res) => {
       email: email,
       phone: phone,
       dni: dni,
-      password: password,
+      password: hashPassword,
       countryId: country,
     });
 
@@ -69,6 +74,25 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const logIn = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username: username } });
+
+    if (user) {
+      if (bcrypt.compareSync(password, user.password)) {
+        res.status(200).json({ msg: " usuario logueado" });
+      } else {
+        res.status(403).json({ msg: " Incorrect Password" });
+      }
+    } else {
+      res.status(404).json({ msg: " Username not found" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const resetPassword = async (req, res) => {};
 
 module.exports = {
@@ -78,4 +102,5 @@ module.exports = {
   deleteUser,
   resetPassword,
   getUsersById,
+  logIn,
 };
