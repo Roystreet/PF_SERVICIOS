@@ -1,7 +1,7 @@
 // Users
 const User = require("../../Models/User");
 const Country = require("../../Models/Country");
-const jwtController = require("../jwtController");
+const { generateToken } = require("../jwtController");
 const bcrypt = require("bcrypt");
 const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
@@ -82,7 +82,10 @@ const logIn = async (req, res) => {
 
     if (user) {
       if (bcrypt.compareSync(password, user.password)) {
-        res.status(200).json({ msg: " usuario logueado" });
+        res.status(200).json({
+          msg: " usuario logueado",
+          token: generateToken({ username: username }),
+        });
       } else {
         res.status(403).json({ msg: " Incorrect Password" });
       }
@@ -97,11 +100,29 @@ const logIn = async (req, res) => {
 const resetPasswordForce = async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password);
-    // const user = await User.findOne({ username: username });
+    const user = await User.findAll({
+      where: {
+        username: username,
+      },
+    });
+    console.log(user);
+    if (user.length > 0) {
+      const hashPassword = await bcrypt.hashSync(password, salt);
+      await User.update(
+        { password: hashPassword },
+        {
+          where: {
+            username: username,
+          },
+        }
+      );
+      res.status(200).json({ msg: "Password Restore " });
+    } else {
+      res.status(404).json({ msg: "User not found" });
+    }
   } catch (err) {
     console.log(err);
-    res.status(404).json({ msg: "error" });
+    res.status(404).json({ msg: "error " });
   }
 };
 
