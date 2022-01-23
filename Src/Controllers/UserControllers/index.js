@@ -1,6 +1,7 @@
 // Users
 const User = require("../../Models/User");
 const Country = require("../../Models/Country");
+const jwtController = require("../jwtController");
 const bcrypt = require("bcrypt");
 const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
