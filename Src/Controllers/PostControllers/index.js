@@ -4,7 +4,7 @@ const Image = require ('../../Models/Image')
 const {Op} = require("sequelize")
 const getPosts = async (req, res, next) => {
 	try {
-		console.log('hola',req.query);
+
 		let { name } = req.query;
 		if (name) {
 		  let posts = await Post.findAll({
@@ -49,15 +49,15 @@ async function createPosts(req, res) {
 	}
   }
 const getPostUsers = async (req, res, next) => {
-	const params = req.params.user;
+	const params = req.params.userId;
 	try {
 		const dataFound = await Post.findAll({
-			include: {
+			include: [{
 				model: User,
 				where: {
 					id: params
 				}
-			}
+			},Image]
 		});
 		res.status(200).json(dataFound);
 		return;

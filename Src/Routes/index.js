@@ -32,7 +32,7 @@ const { getCountries } = require("../Controllers/CountryControllers");
 router.get("/post?name", getPosts);
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
-router.get("/post/:id", getPostUsers);
+router.get("/postbyuser/:userId", getPostUsers);
 router.get("/posts/:id", getPostById);
 router.delete("/post/:id", deletePosts);
 router.post('/post',createPosts )
