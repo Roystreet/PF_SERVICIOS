@@ -12,6 +12,7 @@ const {
   deleteUser,
   createUsers,
   logIn,
+  resetPasswordForce,
 } = require("../Controllers/UserControllers");
 
 const {
@@ -28,7 +29,8 @@ const {
 } = require("../Controllers/CategoryControllers");
 
 const { getOrders, getOrderId } = require("../Controllers/OrderControllers");
-const {getCountries} = require("../Controllers/CountryControllers");
+const { getCountries } = require("../Controllers/CountryControllers");
+
 // Posts
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
@@ -40,7 +42,7 @@ router.post("/register", createUsers);
 router.get("/users", getUsers);
 router.get("/user/:id", getUsersById);
 router.delete("/user/:id", deleteUser);
-router.post("/user/restore");
+router.post("/user/reset-password-force", resetPasswordForce);
 router.put("/user/:id");
 router.post("/login", logIn);
 
@@ -62,6 +64,7 @@ router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
 router.post("/order");
 //counrties
-router.get('/countries', getCountries)
+
+router.get("/countries", getCountries);
 
 module.exports = router;
