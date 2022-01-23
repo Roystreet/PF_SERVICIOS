@@ -27,17 +27,7 @@ async function getProducts(req, res) {
     res.status(400).send("error");
   }
 }
-async function getProductById(req, res) {
-  try {
-    let { id } = req.params;
-    let foundProduct = await Product.findByPk(id, {
-      include: Category,
-    });
-    res.json(foundProduct);
-  } catch (err) {
-    console.log(err);
-  }
-}
+
 
 async function postProduct(req, res) {
   try {

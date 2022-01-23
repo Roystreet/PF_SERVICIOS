@@ -1,9 +1,20 @@
 const Post = require('../../Models/Post');
-const Product = require('../../Models/Product');
 const User = require('../../Models/User');
 
 const getPosts = async (req, res, next) => {
 	try {
+		let { name } = req.query;
+		if (name) {
+		  let posts = await Post.findAll({
+			where: {
+			  name: {
+				[Op.iLike]: `%${name}%`,
+			  },
+			},
+		  });
+		  return res.json(posts);
+		}
+
 		const dataFound = await Post.findAll({});
 		res.status(200).json(dataFound);
 		return;
@@ -13,31 +24,25 @@ const getPosts = async (req, res, next) => {
 		return;
 	}
 };
-const createPosts = async (req, res, next) => {
-	//forma json recibido {userId:?????,title:STRING,description:STRING,status:BOOLEAN,stock:NUMBER}
-	//id del producto
-	const { id } = req.params;
-	//debe recibir req.body.userId
+async function createPosts(req, res) {
 	try {
-		const datadFound = await Product.findByPk(id);
-		if (datadFound) {
-			await Post.create({
-				title: req.body.title,
-				description: req.body.description,
-				productId: id,
-				userId: req.body.userId,
-				stock: req.body.stock,
-				status: req.body.status
-			});
-			res.status(200).json({ msg: 'post created' });
-			return;
-		}
-		res.status(400).json({ msg: 'product not found' });
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({ msg: error });
+	  let post = req.body; //en el body ya se incluye el userId
+	  let addedPost = await Post.create({
+		...post,
+	  });
+	  let addingImages = addedPost.images.map(link=>{
+			return Image.create({
+			  link:link,
+			  postId:addedPost.id
+			})
+	  })
+	  await Promise.all(addingImages)
+	  res.status(201).json(addedPost);
+	} catch (err) {
+	  res.status(400).send("error. Verify request data");
+	  console.log(err);
 	}
-};
+  }
 const getPostUsers = async (req, res, next) => {
 	const params = req.params.user;
 	try {
@@ -95,10 +100,22 @@ const deletePosts = async (req, res, next) => {
 	}
 };
 
+async function getPostById(req, res) {
+	try {
+	  let { id } = req.params;
+	  let foundPost = await Post.findByPk(id, {
+		include: Category,
+	  });
+	  res.json(foundPost);
+	} catch (err) {
+	  console.log(err);
+	}
+  }
 module.exports = {
 	getPosts,
 	getPostUsers,
 	updatePosts,
 	deletePosts,
-	createPosts
+	createPosts,
+	getPostById
 };

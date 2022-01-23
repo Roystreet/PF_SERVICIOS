@@ -1,30 +1,39 @@
 const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
-const User = require("../Models/User");
+const Category = require("./Category");
+const User = require("./User");
+
 const Post = sequelize.define("post", {
-  title: {
-    type: DataTypes.TEXT,
+  name: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   description: {
-    type: DataTypes.TEXT,
-  },
-  status: {
     type: DataTypes.STRING,
+    allowNull: null,
+  },
+  price: {
+    type: DataTypes.DECIMAL,
     allowNull: false,
   },
   stock: {
     type: DataTypes.INTEGER,
-    validate: {
-      min: 1,
-      max: 100,
-    },
+    defaultValue: 0,
+  },
+  status: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
 });
-
 User.hasMany(Post, {
   foreignKey: "userId",
 });
 Post.belongsTo(User);
+
+Category.hasMany(Post, {
+  foreignKey: "categoryId",
+});
+
+Post.belongsTo(Category);
 
 module.exports = Post;

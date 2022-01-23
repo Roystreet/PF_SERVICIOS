@@ -32,6 +32,9 @@ const User = sequelize.define("user", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  image: {
+     type:  DataTypes.TEXT
+  }
 });
 
 Country.hasMany(User, {
