@@ -1,17 +1,20 @@
 const Post = require('../../Models/Post');
 const User = require('../../Models/User');
 const Image = require ('../../Models/Image')
+const {Op} = require("sequelize")
 const getPosts = async (req, res, next) => {
 	try {
+		console.log('hola',req.query);
 		let { name } = req.query;
 		if (name) {
 		  let posts = await Post.findAll({
 			where: {
 			  name: {
 				[Op.iLike]: `%${name}%`,
-			  },
-			  include:[User,Image]
-			},
+
+			}
+		},
+		include: [User,Image]
 		  });
 		  return res.json(posts);
 		}
@@ -21,7 +24,7 @@ const getPosts = async (req, res, next) => {
 		res.status(200).json(dataFound);
 		return;
 	} catch (error) {
-		res.status(500).json({ msg: [ error ] });
+		res.status(500).json({ msg: 'error' });
 		console.log('Error', Error);
 		return;
 	}
@@ -83,7 +86,7 @@ const updatePosts = async (req, res, next) => {
 			  await Promise.all(addingImages)
 
 			}
-			
+
 			res.status(200).json({ msg: 'post update' });
 			return;
 		} else {
