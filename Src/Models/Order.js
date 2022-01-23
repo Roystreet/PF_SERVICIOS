@@ -1,6 +1,9 @@
 const sequelize = require("../Database/index");
+const {DataTypes} = require("sequelize")
 
-const Product = require("./Product");
+
+
+const Post = require("./Post");
 const User = require("./User");
 
 const Order = sequelize.define("order", {

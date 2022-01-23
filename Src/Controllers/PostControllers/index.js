@@ -1,6 +1,6 @@
 const Post = require('../../Models/Post');
 const User = require('../../Models/User');
-
+const Image = require ('../../Models/Image')
 const getPosts = async (req, res, next) => {
 	try {
 		let { name } = req.query;
@@ -10,12 +10,14 @@ const getPosts = async (req, res, next) => {
 			  name: {
 				[Op.iLike]: `%${name}%`,
 			  },
+			  include:[User,Image]
 			},
 		  });
 		  return res.json(posts);
 		}
 
-		const dataFound = await Post.findAll({});
+		const dataFound = await Post.findAll({
+			include:[User,Image]});
 		res.status(200).json(dataFound);
 		return;
 	} catch (error) {
@@ -30,7 +32,7 @@ async function createPosts(req, res) {
 	  let addedPost = await Post.create({
 		...post,
 	  });
-	  let addingImages = addedPost.images.map(link=>{
+	  let addingImages = post.images.map(link=>{
 			return Image.create({
 			  link:link,
 			  postId:addedPost.id
@@ -71,6 +73,17 @@ const updatePosts = async (req, res, next) => {
 		const datFound = await Post.findByPk(pk);
 		if (datFound) {
 			datFound.update(updateData);
+			if(updateData.images){
+			let addingImages = updateData.images.map(link=>{
+					return Image.create({
+					  link:link,
+					  postId:pk
+					})
+			  })
+			  await Promise.all(addingImages)
+
+			}
+			
 			res.status(200).json({ msg: 'post update' });
 			return;
 		} else {
@@ -78,7 +91,7 @@ const updatePosts = async (req, res, next) => {
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(400).json({ msg: error });
+		res.status(400).json({ msg: 'error' });
 	}
 };
 
@@ -104,7 +117,7 @@ async function getPostById(req, res) {
 	try {
 	  let { id } = req.params;
 	  let foundPost = await Post.findByPk(id, {
-		include: Category,
+			  include:[User,Image],
 	  });
 	  res.json(foundPost);
 	} catch (err) {
