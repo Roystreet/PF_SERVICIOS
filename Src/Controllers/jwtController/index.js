@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 //al recibir los datos del login *usuario* *contraseña* se verifica que el usuario exista en la base de datos
 //y que la contraseña sea correcta (encriptada) y se genera un token de acceso (generateToken) que se devuelve al cliente
 //para que sea guardada en el local storage del navegador
+jwt.decode;
 
 //user debe ser un objeto con el id del usuario y el rol
 function generateToken(user) {
