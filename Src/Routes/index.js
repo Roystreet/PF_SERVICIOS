@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { jwtMiddleware } = require("../Controllers/jwtController/index");
 const {
   getPosts,
   getPostUsers,
@@ -37,7 +38,7 @@ router.post('/post',createPosts )
 
 //Users
 router.post("/register", createUsers);
-router.get("/users", getUsers);
+router.get("/users", jwtMiddleware, getUsers);
 router.get("/user/:id", getUsersById);
 router.delete("/user/:id", deleteUser);
 router.post("/user/reset-password-force", resetPasswordForce);
@@ -57,6 +58,8 @@ router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
 router.post("/order");
 //counrties
+
+router.get("/countries", getCountries);
 
 router.get("/countries", getCountries);
 
