@@ -1,6 +1,6 @@
 const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
-const Product = require("./Product");
+const Post = require("./Post");
 
 const Image = sequelize.define("image", {
   link: {
@@ -9,10 +9,10 @@ const Image = sequelize.define("image", {
   }
 });
 
-Product.hasMany(Image, {
-    foreignKey:'productId'
+Post.hasMany(Image, {
+    foreignKey:'postId'
 })
 
-Image.belongsTo(Product)
+Image.belongsTo(Post)
 
 module.exports = Image

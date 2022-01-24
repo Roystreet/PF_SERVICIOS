@@ -5,6 +5,8 @@ const {
   getPostUsers,
   updatePosts,
   deletePosts,
+  getPostById,
+  createPosts
 } = require("../Controllers/PostControllers");
 
 const {
@@ -16,13 +18,7 @@ const {
   resetPasswordForce,
 } = require("../Controllers/UserControllers");
 
-const {
-  getProducts,
-  postProduct,
-  getProductById,
-  updateProduct,
-  deleteProduct,
-} = require("../Controllers/ProductControllers/index");
+
 const {
   getCategories,
   postCategory,
@@ -33,10 +29,13 @@ const { getOrders, getOrderId } = require("../Controllers/OrderControllers");
 const { getCountries } = require("../Controllers/CountryControllers");
 
 // Posts
+router.get("/post?name", getPosts);
 router.get("/post", getPosts);
 router.put("/post", updatePosts);
-router.get("/post/:id", getPostUsers);
+router.get("/postbyuser/:userId", getPostUsers);
+router.get("/posts/:id", getPostById);
 router.delete("/post/:id", deletePosts);
+router.post('/post',createPosts )
 
 //Users
 router.post("/register", createUsers);
@@ -47,12 +46,7 @@ router.post("/user/reset-password-force", resetPasswordForce);
 router.put("/user/:id");
 router.post("/login", logIn);
 
-//Products
-router.get("/products?name", getProducts);
-router.get("/products", getProducts);
-router.post("/product", postProduct);
-router.put("/product", updateProduct);
-router.delete("/product/:id", deleteProduct);
+
 
 // Category
 router.get("/category", getCategories);
@@ -64,7 +58,9 @@ router.get("/lagout");
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
 router.post("/order");
+//counrties
 
 router.get("/countries", getCountries);
+
 
 module.exports = router;
