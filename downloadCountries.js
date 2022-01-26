@@ -5,7 +5,7 @@ var country = Country;
 //bajar todo de la api para la base de datos
 async function saveInDatabase(countryObj) {
   await country.create({
-    name: countryObj.name.official,
+    name: countryObj.name.common,
   });
 }
 function requestCountries() {
