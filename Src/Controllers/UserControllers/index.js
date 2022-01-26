@@ -38,7 +38,6 @@ const createUsers = async (req, res) => {
       dni,
       country,
       password,
-      role
     } = req.body;
 
     const hashPassword = await bcrypt.hashSync(password, salt);
@@ -51,8 +50,7 @@ const createUsers = async (req, res) => {
       phone: phone,
       dni: dni,
       password: hashPassword,
-      CountryId: country,
-      role:role
+      countryId: country,
     });
 
     console.log("usuario creado");
@@ -87,6 +85,10 @@ const logIn = async (req, res) => {
         res.status(200).json({
           msg: " usuario logueado",
           token: generateToken({ username: username }),
+          id: user.id,
+          username: user.username,
+          first_name: user.first_name,
+          last_name: user.last_name,
         });
       } else {
         res.status(403).json({ msg: " Incorrect Password" });
