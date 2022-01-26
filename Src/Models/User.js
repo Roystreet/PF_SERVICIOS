@@ -36,9 +36,10 @@ const User = sequelize.define("User", {
     type: DataTypes.TEXT,
   },
   role: {
-    type:DataTypes.ENUM("user","admin","superAdmin"),
-    allowNull:false
-  }
+    type: DataTypes.ENUM("user", "admin", "superAdmin"),
+    allowNull: false,
+    defaultValue: "user",
+  },
 });
 
 Country.hasMany(User, {

@@ -16,6 +16,10 @@ function verifyToken(token) {
   });
 }
 
+function decodeToken(token) {
+  return jwt.decode(token);
+}
+
 //el usuario al entrar a una ruta protegida debe devolver un token de acceso en la cabecera con el nombre de "token"
 
 const jwtMiddleware = (req, res, next) => {
@@ -29,7 +33,7 @@ const jwtMiddleware = (req, res, next) => {
       //si la verificación es correcta se pasa al siguiente middleware
       next();
       //la ruta debe tener esta form router.get("/rutaprotegida",jwtMiddleware,(req,res)=>{...})
-      //al ejecutar next(),el usuario podrá acceder a la ruta
+      //al ejecutar next(),el usuario podrá acceder a la rut
     } else {
       //si el token no se puede verificar, se devuelve un error
       res.status(401).json({ msg: "Invalid token" });

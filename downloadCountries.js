@@ -24,12 +24,12 @@ function requestCountries() {
     .catch((err) => console.log(err));
 }
 async function paddingData() {
-  let con = await country.findAll()
-  if(con.length == 0){
-    requestCountries()
+  let con = await country.findAll();
+  if (con.length == 0) {
+    requestCountries();
     console.log("creating countries");
   }
 }
-setTimeout(()=>{
-  paddingData()
-},5000)
+setTimeout(() => {
+  paddingData();
+}, 5000);
