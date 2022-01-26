@@ -4,10 +4,6 @@ const Post = require("./Post");
 const User = require("./User");
 
 const Order = sequelize.define("Order", {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   delivery_adress: {
     type: DataTypes.STRING,
   },
@@ -16,8 +12,8 @@ const Order = sequelize.define("Order", {
   },
 });
 
-Order.belongsToMany(User, { through: "OrderUser" });
-User.belongsToMany(Order, { through: "OrderUser" });
+Order.hasMany(User);
+User.belongsTo(Order, { through: "OrderUser" });
 
 Order.belongsToMany(Post, { through: "OrderPost" });
 Post.belongsToMany(Order, { through: "OrderPost" });

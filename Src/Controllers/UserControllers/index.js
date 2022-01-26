@@ -84,7 +84,7 @@ const logIn = async (req, res) => {
       if (bcrypt.compareSync(password, user.password)) {
         res.status(200).json({
           msg: " usuario logueado",
-          token: generateToken({ username: username }),
+          token: generateToken({ username: username, rol: user.role }),
           id: user.id,
           username: user.username,
           first_name: user.first_name,
