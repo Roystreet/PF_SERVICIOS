@@ -2,17 +2,17 @@ const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
 const Post = require("./Post");
 
-const Image = sequelize.define("image", {
+const Image = sequelize.define("Image", {
   link: {
     type: DataTypes.TEXT,
     allowNull: false,
-  }
+  },
 });
 
 Post.hasMany(Image, {
-    foreignKey:'postId'
-})
+  foreignKey: "postId",
+});
 
-Image.belongsTo(Post)
+Image.belongsTo(Post);
 
-module.exports = Image
+module.exports = Image;

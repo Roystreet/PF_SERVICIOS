@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 const Category = require("./Category");
 const User = require("./User");
 
-const Post = sequelize.define("post", {
+const Post = sequelize.define("Post", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,

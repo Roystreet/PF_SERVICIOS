@@ -2,7 +2,7 @@ const sequelize = require("../Database");
 const { DataTypes } = require("sequelize");
 const Country = require("../Models/Country");
 
-const User = sequelize.define("user", {
+const User = sequelize.define("User", {
   first_name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -33,8 +33,8 @@ const User = sequelize.define("user", {
     allowNull: false,
   },
   image: {
-     type:  DataTypes.TEXT
-  }
+    type: DataTypes.TEXT,
+  },
 });
 
 Country.hasMany(User, {
