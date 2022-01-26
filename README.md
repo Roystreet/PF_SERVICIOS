@@ -2,8 +2,8 @@
 
 
 ## Uso de las rutas post
-- get /api/posts ---> retorna los primeros 100 posts
-- get /api/posts?name='..' ---> retorna todos los posts que se  parezcan en nombre
+- get /api/post ---> retorna los primeros 100 posts
+- get /api/post?name='..' ---> retorna todos los posts que se  parezcan en nombre
 
 - get /api/posts/:id retorna un objeto con la info del post
 
@@ -17,7 +17,7 @@
     "stock": 3,
     "status": true,
     "userId": 1,
-    "categoryId": 1,
+    "categories": [1,2,3],
     "images":["https://image.co/aja", "https://image.co/aja"]
 }
 

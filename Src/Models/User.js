@@ -35,10 +35,14 @@ const User = sequelize.define("User", {
   image: {
     type: DataTypes.TEXT,
   },
+  role: {
+    type:DataTypes.ENUM("user","admin","superAdmin"),
+    allowNull:false
+  }
 });
 
 Country.hasMany(User, {
-  foreignKey: "countryId",
+  foreignKey: "CountryId",
 });
 User.belongsTo(Country);
 
