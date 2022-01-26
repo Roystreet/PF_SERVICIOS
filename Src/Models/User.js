@@ -38,7 +38,7 @@ const User = sequelize.define("User", {
 });
 
 Country.hasMany(User, {
-  foreignKey: "countryId",
+  foreignKey: "CountryId",
 });
 User.belongsTo(Country);
 
