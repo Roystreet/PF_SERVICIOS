@@ -10,7 +10,7 @@ const Image = sequelize.define("Image", {
 });
 
 Post.hasMany(Image, {
-  foreignKey: "postId",
+  foreignKey: "PostId",
 });
 
 Image.belongsTo(Post);
