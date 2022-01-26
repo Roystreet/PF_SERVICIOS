@@ -38,6 +38,7 @@ const createUsers = async (req, res) => {
       dni,
       country,
       password,
+      role
     } = req.body;
 
     const hashPassword = await bcrypt.hashSync(password, salt);
@@ -51,6 +52,7 @@ const createUsers = async (req, res) => {
       dni: dni,
       password: hashPassword,
       CountryId: country,
+      role:role
     });
 
     console.log("usuario creado");
