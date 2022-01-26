@@ -25,6 +25,8 @@ const getOrderId = async (req, res) => {
   }
 };
 
+const getOrderUser = async (req, res) => {};
+
 module.exports = {
   getOrders,
   getOrderId,
