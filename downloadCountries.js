@@ -23,4 +23,10 @@ function requestCountries() {
     })
     .catch((err) => console.log(err));
 }
-requestCountries()
+async function paddingData() {
+  let con = await country.findAll()
+  if(con.length == 0){
+    requestCountries()
+  }
+}
+paddingData()
