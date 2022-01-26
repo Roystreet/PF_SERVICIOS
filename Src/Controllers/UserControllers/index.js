@@ -50,7 +50,7 @@ const createUsers = async (req, res) => {
       phone: phone,
       dni: dni,
       password: hashPassword,
-      countryId: country,
+      CountryId: country,
     });
 
     console.log("usuario creado");

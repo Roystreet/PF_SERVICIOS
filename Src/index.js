@@ -1,5 +1,6 @@
 const app = require("./app");
 const sequelize = require("./Database");
+require("../downloadCountries")
 
 app.listen(app.get("PORT"), async () => {
   try {
@@ -12,10 +13,3 @@ app.listen(app.get("PORT"), async () => {
   }
 });
 
-async function paddingData() {
-  let con = await sequelize.models.Country.findAll()
-  if(con.length == 0){
-    require("../downloadCountries")
-  }
-}
-paddingData()
