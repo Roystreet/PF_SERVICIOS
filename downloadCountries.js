@@ -27,6 +27,9 @@ async function paddingData() {
   let con = await country.findAll()
   if(con.length == 0){
     requestCountries()
+    console.log("creating countries");
   }
 }
-paddingData()
+setTimeout(()=>{
+  paddingData()
+},5000)
