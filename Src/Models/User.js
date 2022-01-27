@@ -5,7 +5,6 @@ const Country = require("../Models/Country");
 const User = sequelize.define("User", {
   first_name: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   last_name: {
     type: DataTypes.STRING,
@@ -21,25 +20,23 @@ const User = sequelize.define("User", {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   dni: {
     type: DataTypes.STRING,
-    allowNull: false,
+  
     unique: true,
   },
   phone: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   image: {
     type: DataTypes.TEXT,
   },
   role: {
-    type: DataTypes.ENUM("user", "admin", "superAdmin"),
-    allowNull: false,
-    defaultValue: "user",
-  },
+    type:DataTypes.ENUM("user","admin","superAdmin"),
+    allowNull:false,
+    defaultValue:"user"
+  }
 });
 
 Country.hasMany(User, {

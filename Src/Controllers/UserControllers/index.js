@@ -50,10 +50,10 @@ const createUsers = async (req, res) => {
       phone: phone,
       dni: dni,
       password: hashPassword,
-      countryId: country,
+      CountryId: country,
     });
 
-    console.log("usuario creado");
+    console.log("user created");
 
     res.status(200).json(user);
   } catch (err) {

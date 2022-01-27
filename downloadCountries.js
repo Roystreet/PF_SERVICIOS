@@ -5,10 +5,11 @@ let Country = require("./Src/Models/Country");
 const User = require("./Src/Models/User");
 
 var country = Country;
-let descriptionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros. Cras viverra ligula nec nibh consequat posuere. Proin dignissim, velit a blandit placerat, velit quam porta enim, sodales mattis dolor nisi non sapien. Pellentesque ac dui et urna venenatis mollis in eget nibh. Donec in est bibendum, interdum ex id, dictum mi. Vestibulum maximus justo non mollis interdum. Suspendisse at lacus quis augue fringilla finibus eu id ex. Phasellus aliquet mi ut arcu congue egestas. Proin vehicula est eget nunc imperdiet semper. In vitae lorem eget eros efficitur varius. Nulla non diam feugiat libero convallis finibus. Nullam sit amet mi quis nunc vestibulum fringilla. Ut vel arcu vehicula, maximus lacus suscipit, lacinia lectus. Suspendisse sed consectetur nisl. Nullam vel nunc at odio pulvinar mollis eu ac felis. Etiam mattis mauris sem.`;
+let descriptionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros. Cras viverra ligula nec nibh consequat posuere. Proin dignissim, velit a blandit placerat, velit quam porta enim, sodales mattis dolor nisi non sapien. Pellentesque ac dui et urna venenatis mollis in eget nibh. Donec in est bibendum, interdum ex id, dictum mi. Vestibulum maximus justo non mollis interdum. Suspendisse at lacus quis augue fringilla finibus eu id ex. Phasellus aliquet mi ut arcu congue egestas. Proin vehicula est eget nunc imperdiet semper. In vitae lorem eget eros efficitur varius. Nulla non diam feugiat libero convallis finibus. Nullam sit amet mi quis nunc vestibulum fringilla. Ut vel arcu vehicula, maximus lacus suscipit, lacinia lectus. Suspendisse sed consectetur nisl. Nullam vel nunc at odio pulvinar mollis eu ac felis. Etiam mattis mauris sem.`
 
 function getPriceRandom() {
-  return Math.floor(Math.random() * 1000);
+    return Math.floor(Math.random()*1000)
+
 }
 
 //bajar todo de la api para la base de datos
@@ -37,6 +38,7 @@ function requestCountries() {
 }
 async function paddingData() {
   try {
+
     let con = await country.count();
     if (con == 0) {
       requestCountries();
@@ -54,8 +56,10 @@ async function paddingData() {
       console.log("creating Categories");
     }
 
+
     //userDefault
     let conUs = await User.count();
+
     if (conUs == 0) {
       await axios.post(
         `http://localhost:${process.env.PORT || 4000}/api/register`,
@@ -67,7 +71,9 @@ async function paddingData() {
         }
       );
       setTimeout(() => {
+
         sequelize.query(`INSERT INTO public."Users"(
+
           id, first_name, last_name, username, password, email, dni, phone,image, "createdAt", "updatedAt", "CountryId")
           VALUES (default,'Nicolas','Nicolas','Nicolas','Nicolas','nico@nico.com', '3423425','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1),
           (default,'Marcos','Marcos','Marcos','Marcos','nico@nico.com', '34234275','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1),
@@ -180,8 +186,10 @@ async function paddingData() {
             (default,'Muchos Productos','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1),
             (default,'Papa','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1)
           `);
+
       }, 3000);
     }
+
   } catch (err) {
     console.log(err);
   }
