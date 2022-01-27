@@ -17,7 +17,11 @@ const {
   postCategory,
   deleteCategory,
 } = require("../Controllers/CategoryControllers");
-const { getOrders, getOrderId } = require("../Controllers/OrderControllers");
+const {
+  getOrders,
+  getOrderId,
+  createOrder,
+} = require("../Controllers/OrderControllers");
 const { sendEmail } = require("../Controllers/SendEmailController");
 
 // Route for Post
@@ -37,6 +41,7 @@ router.delete("/category/:id", deleteCategory);
 // Route Orders
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
+router.post("/order", createOrder);
 // Route email
 router.get("/email", sendEmail);
 

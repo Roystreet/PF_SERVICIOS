@@ -3,9 +3,23 @@ const Order = require("../../Models/Order");
 const User = require("../../Models/User");
 const Post = require("../../Models/Post");
 
+const createOrder = async (req, res) => {
+  try {
+    const { posts, userId, total, delivery_adress } = req.body;
+    const newOrder = await Order.create({
+      delivery_adress: delivery_adress,
+      total: total,
+      UserId: userId,
+    });
+    await newOrder.setPosts(posts);
+    res.status(200).json(newOrder);
+  } catch (err) {
+    console.log(err);
+  }
+};
 const getOrders = async (req, res) => {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({ include: [Post, User] });
 
     res.status(200).json(orders);
   } catch (err) {
@@ -25,9 +39,30 @@ const getOrderId = async (req, res) => {
   }
 };
 
-const getOrderUser = async (req, res) => {};
+const getOrderUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const orderCustomer = await Order.findAll({
+      where: {
+        UserId: parseInt(id),
+      },
+      include: Post,
+    });
+    console.log(orderCustomer);
+    res.status(200).json(orderCustomer);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateStatusOrder = async (req, res) => {
+  try {
+  } catch (err) {}
+};
 
 module.exports = {
   getOrders,
   getOrderId,
+  createOrder,
+  getOrderUser,
 };

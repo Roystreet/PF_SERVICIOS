@@ -8,7 +8,12 @@ const Order = sequelize.define("Order", {
     type: DataTypes.STRING,
   },
   status: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.ENUM("creada", "procesada", "completada", "cancelada"),
+    defaultValue: "creada",
+  },
+  total: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
 });
 
