@@ -12,8 +12,9 @@ const Order = sequelize.define("Order", {
   },
 });
 
-Order.hasMany(User);
-User.belongsTo(Order, { through: "OrderUser" });
+User.hasMany(Order, { foreignKey: "UserId" });
+
+Order.belongsTo(User);
 
 Order.belongsToMany(Post, { through: "OrderPost" });
 Post.belongsToMany(Order, { through: "OrderPost" });

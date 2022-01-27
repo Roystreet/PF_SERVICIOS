@@ -89,6 +89,7 @@ const logIn = async (req, res) => {
           username: user.username,
           first_name: user.first_name,
           last_name: user.last_name,
+          rol: user.role,
         });
       } else {
         res.status(403).json({ msg: " Incorrect Password" });
