@@ -35,19 +35,26 @@ async function createPosts(req, res) {
     let addedPost = await Post.create({
       ...post,
     });
-    let addingImages = post.images.map((link) => {
-      return Image.create({
-        link: link,
-        PostId: addedPost.id, 
+    if(post.images){
+      let addingImages = post.images.map((link) => {
+        return Image.create({
+          link: link,
+          PostId: addedPost.id, 
+        });
       });
-    });
-    await Promise.all(addingImages);
+      await Promise.all(addingImages);
 
-    let addingCategories = post.categories.map((id) => {
-      return Category.findByPk(id);
-    });
-    let categoriesInDB = await Promise.all(addingCategories);
-    await addedPost.addCategories(categoriesInDB)
+    }
+    
+    if(post.categories){
+      let addingCategories = post.categories.map((id) => {
+        return Category.findByPk(id);
+      });
+      let categoriesInDB = await Promise.all(addingCategories);
+      await addedPost.addCategories(categoriesInDB)
+
+    }
+    
 
     res.status(201).json(addedPost);
   } catch (err) {
@@ -67,7 +74,7 @@ const getPostUsers = async (req, res, next) => {
           },
         },
         Image,
-		Category
+		    Category
       ],
     });
     res.status(200).json(dataFound);
@@ -95,13 +102,16 @@ const updatePosts = async (req, res, next) => {
           });
         });
         await Promise.all(addingImages);
-		let addingCategories = updateData.categories.map((id) => {
-			return Category.findByPk(id);
-		  });
-		  let categoriesInDB = await Promise.all(addingCategories);
-		  await addedPost.addCategories(categoriesInDB)
+        
       }
-	  
+      if (updateData.categories) {
+        let addingCategories = updateData.categories.map((id) => {
+          return Category.findByPk(id);
+        });
+        let categoriesInDB = await Promise.all(addingCategories);
+        await addedPost.addCategories(categoriesInDB);
+        
+      }
 
       res.status(200).json({ msg: "post update" });
       return;
