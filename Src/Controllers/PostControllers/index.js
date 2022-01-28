@@ -3,6 +3,8 @@ const User = require("../../Models/User");
 const Image = require("../../Models/Image");
 const Category = require("../../Models/Category");
 const { Op } = require("sequelize");
+
+const  { CategoryPost}  = require("../../Models/index.js").models
 const getPosts = async (req, res, next) => {
   try {
     let { name } = req.query;
@@ -39,13 +41,13 @@ async function createPosts(req, res) {
       let addingImages = post.images.map((link) => {
         return Image.create({
           link: link,
-          PostId: addedPost.id, 
+          PostId: addedPost.id,
         });
       });
       await Promise.all(addingImages);
 
     }
-    
+
     if(post.categories){
       let addingCategories = post.categories.map((id) => {
         return Category.findByPk(id);
@@ -54,7 +56,7 @@ async function createPosts(req, res) {
       await addedPost.addCategories(categoriesInDB)
 
     }
-    
+
 
     res.status(201).json(addedPost);
   } catch (err) {
@@ -85,32 +87,52 @@ const getPostUsers = async (req, res, next) => {
     res.status(400).json();
   }
 };
+
 const updatePosts = async (req, res, next) => {
   try {
     //asumiendo una llave primaria id
-    //body tendrá la forma {title:STRING,description:STRING,status:STRING,stock:NUMBER}
+   
     const updateData = req.body;
     const pk = req.body.id;
+    //destroy category relation because after that it adds categories
+    CategoryPost.findAll({
+      where:{
+         PostId:pk
+      }
+    })
+    .then(relation=>{
+      return relation.map(r=>r.destroy())
+    })
+
+    Image.findAll({
+      where:{
+         PostId:pk
+      }
+    })
+    .then(imgs=>{
+      return imgs.map(i=>i.destroy())
+    })
+
     const datFound = await Post.findByPk(pk);
     if (datFound) {
       datFound.update(updateData);
-      if (updateData.images) {
-        let addingImages = updateData.images.map((link) => {
+      if (updateData.Images) {
+        let addingImages = updateData.Images.map((link) => {
           return Image.create({
             link: link,
             PostId: pk,
           });
         });
         await Promise.all(addingImages);
-        
+
       }
-      if (updateData.categories) {
-        let addingCategories = updateData.categories.map((id) => {
+      if (updateData.Categories) {
+        let addingCategories = updateData.Categories.map((id) => {
           return Category.findByPk(id);
         });
         let categoriesInDB = await Promise.all(addingCategories);
-        await addedPost.addCategories(categoriesInDB);
-        
+        await datFound.addCategories(categoriesInDB);
+
       }
 
       res.status(200).json({ msg: "post update" });
@@ -126,7 +148,7 @@ const updatePosts = async (req, res, next) => {
 
 const deletePosts = async (req, res, next) => {
   //asumiendo llave primaria id
-  const pk = req.params.user;
+  const pk = req.params.id;
   console.log(pk);
   try {
     const datFound = await Post.findByPk(pk);
@@ -148,7 +170,8 @@ async function getPostById(req, res) {
     let foundPost = await Post.findByPk(id, {
       include: [User, Image,Category],
     });
-    res.json(foundPost);
+    if(foundPost) return res.json(foundPost);
+    res.status(400).json({msg:'post Not found'})
   } catch (err) {
     console.log(err);
   }
