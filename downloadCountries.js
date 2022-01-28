@@ -8,7 +8,7 @@ var country = Country;
 let descriptionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros. Cras viverra ligula nec nibh consequat posuere. Proin dignissim, velit a blandit placerat, velit quam porta enim, sodales mattis dolor nisi non sapien. Pellentesque ac dui et urna venenatis mollis in eget nibh. Donec in est bibendum, interdum ex id, dictum mi. Vestibulum maximus justo non mollis interdum. Suspendisse at lacus quis augue fringilla finibus eu id ex. Phasellus aliquet mi ut arcu congue egestas. Proin vehicula est eget nunc imperdiet semper. In vitae lorem eget eros efficitur varius. Nulla non diam feugiat libero convallis finibus. Nullam sit amet mi quis nunc vestibulum fringilla. Ut vel arcu vehicula, maximus lacus suscipit, lacinia lectus. Suspendisse sed consectetur nisl. Nullam vel nunc at odio pulvinar mollis eu ac felis. Etiam mattis mauris sem.`
 
 function getPriceRandom() {
-    return Math.floor(Math.random()*1000)
+  return Math.floor(Math.random() * 1000)
 
 }
 
@@ -18,6 +18,7 @@ async function saveInDatabase(countryObj) {
     name: countryObj.name.common,
   });
 }
+
 function requestCountries() {
   const urlRC = "https://restcountries.com/v3/all";
 
@@ -62,12 +63,10 @@ async function paddingData() {
 
     if (conUs == 0) {
       await axios.post(
-        `http://localhost:${process.env.PORT || 4000}/api/register`,
-        {
+        `http://localhost:${process.env.PORT || 4000}/api/register`, {
           username: "henry",
           password: "101010",
-          image:
-            "https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg",
+          image: "https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg",
         }
       );
       setTimeout(() => {
@@ -80,7 +79,7 @@ async function paddingData() {
           (default,'juanda','juanda','juanda','juanda','nico@nico.com', '34234285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1),
           (default,'alvaro','alvaro','alvaro','alvaro','nico@nico.com', '342334285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1),
           (default,'roiner','roiner','roiner','roiner','nico@nico.com', '3442334285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1);
-          
+
           INSERT INTO public."Posts"(
             id, name, description, price, stock, status, "createdAt", "updatedAt", "UserId")
             VALUES (default,'Guitarra','suena bien' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1),

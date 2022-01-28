@@ -5,5 +5,5 @@ const User = require("./User.js");
 const Order = require("./Order.js");
 const Category = require("./Category.js");
 const Image = require("./Image.js");
-
+const Review = require("./Review");
 module.exports = sequelize

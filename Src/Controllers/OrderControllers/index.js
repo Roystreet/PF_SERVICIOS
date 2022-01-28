@@ -5,7 +5,12 @@ const Post = require("../../Models/Post");
 
 const createOrder = async (req, res) => {
   try {
-    const { posts, userId, total, delivery_adress } = req.body;
+    const {
+      posts,
+      userId,
+      total,
+      delivery_adress
+    } = req.body;
     const newOrder = await Order.create({
       delivery_adress: delivery_adress,
       total: total,
@@ -19,7 +24,9 @@ const createOrder = async (req, res) => {
 };
 const getOrders = async (req, res) => {
   try {
-    const orders = await Order.findAll({ include: [Post, User] });
+    const orders = await Order.findAll({
+      include: [Post, User]
+    });
 
     res.status(200).json(orders);
   } catch (err) {
@@ -28,12 +35,16 @@ const getOrders = async (req, res) => {
 };
 const getOrderId = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
 
     const order = await Order.findByPk(parseInt(id));
 
     if (order) res.status(200).json(order);
-    else res.status(404).json({ msg: "Order not found" });
+    else res.status(404).json({
+      msg: "Order not found"
+    });
   } catch (err) {
     console.error(err);
   }
@@ -41,7 +52,9 @@ const getOrderId = async (req, res) => {
 
 const getOrderUser = async (req, res) => {
   try {
-    const { id } = req.body;
+    const {
+      id
+    } = req.body;
     const orderCustomer = await Order.findAll({
       where: {
         UserId: parseInt(id),
@@ -56,8 +69,7 @@ const getOrderUser = async (req, res) => {
 };
 
 const updateStatusOrder = async (req, res) => {
-  try {
-  } catch (err) {}
+  try {} catch (err) {}
 };
 
 module.exports = {
