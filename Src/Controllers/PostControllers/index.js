@@ -91,7 +91,7 @@ const getPostUsers = async (req, res, next) => {
 const updatePosts = async (req, res, next) => {
   try {
     //asumiendo una llave primaria id
-    //body tendrá la forma {title:STRING,description:STRING,status:STRING,stock:NUMBER}
+   
     const updateData = req.body;
     const pk = req.body.id;
     //destroy category relation because after that it adds categories
@@ -104,11 +104,20 @@ const updatePosts = async (req, res, next) => {
       return relation.map(r=>r.destroy())
     })
 
+    Image.findAll({
+      where:{
+         PostId:pk
+      }
+    })
+    .then(imgs=>{
+      return imgs.map(i=>i.destroy())
+    })
+
     const datFound = await Post.findByPk(pk);
     if (datFound) {
       datFound.update(updateData);
-      if (updateData.images) {
-        let addingImages = updateData.images.map((link) => {
+      if (updateData.Images) {
+        let addingImages = updateData.Images.map((link) => {
           return Image.create({
             link: link,
             PostId: pk,
