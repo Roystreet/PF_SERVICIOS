@@ -22,7 +22,17 @@ const {
   getOrderId,
   createOrder,
 } = require("../Controllers/OrderControllers");
-const { sendEmail } = require("../Controllers/SendEmailController");
+const {
+  sendEmail
+} = require("../Controllers/SendEmailController");
+const {
+  createReview,
+  updateReview,
+  deleteReview,
+  getReviewByPost
+
+} = require("../Controllers/ReviewController/index.js");
+const {} = require("../Controllers/ReviewController/index.js");
 
 // Route for Post
 router.put("/post", updatePosts);
@@ -44,5 +54,11 @@ router.get("/order/:id", getOrderId);
 router.post("/order", createOrder);
 // Route email
 router.get("/email", sendEmail);
+// Route Review
+router.post("/review", createReview)
+router.put("/review", updateReview)
+router.delete("/review", deleteReview)
+router.get("/review", getReviewByPost)
+
 
 module.exports = router;

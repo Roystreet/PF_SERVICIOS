@@ -1,5 +1,7 @@
 const sequelize = require("../Database");
-const { DataTypes } = require("sequelize");
+const {
+  DataTypes
+} = require("sequelize");
 const Category = require("./Category");
 const User = require("./User");
 
@@ -18,6 +20,10 @@ const Post = sequelize.define("Post", {
   },
   stock: {
     type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  ratingProm: {
+    type: DataTypes.DECIMAL,
     defaultValue: 0,
   },
   status: {
