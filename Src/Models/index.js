@@ -6,4 +6,6 @@ const Order = require("./Order.js");
 const Category = require("./Category.js");
 const Image = require("./Image.js");
 const Review = require("./Review");
+const Question = require("./Question");
+
 module.exports = sequelize

@@ -3,8 +3,9 @@ const User = require("../../Models/User");
 const Image = require("../../Models/Image");
 const Category = require("../../Models/Category");
 const { Op } = require("sequelize");
+const  { CategoryPost}  = require("../../Models/index.js").models;
+const Question = require("../../Models/Question");
 
-const  { CategoryPost}  = require("../../Models/index.js").models
 const getPosts = async (req, res, next) => {
   try {
     let { name } = req.query;
@@ -15,13 +16,13 @@ const getPosts = async (req, res, next) => {
             [Op.iLike]: `%${name}%`,
           },
         },
-        include: [User, Image,Category],
+        include: [User, Image,Category, Question],
       });
       return res.json(posts);
     }
 
     const dataFound = await Post.findAll({
-      include: [User, Image, Category],
+      include: [User, Image, Category, Question],
     });
     res.status(200).json(dataFound);
     return;
@@ -76,7 +77,8 @@ const getPostUsers = async (req, res, next) => {
           },
         },
         Image,
-		    Category
+		    Category,
+        Question
       ],
     });
     res.status(200).json(dataFound);
@@ -91,7 +93,7 @@ const getPostUsers = async (req, res, next) => {
 const updatePosts = async (req, res, next) => {
   try {
     //asumiendo una llave primaria id
-   
+
     const updateData = req.body;
     const pk = req.body.id;
     //destroy category relation because after that it adds categories
@@ -168,7 +170,7 @@ async function getPostById(req, res) {
   try {
     let { id } = req.params;
     let foundPost = await Post.findByPk(id, {
-      include: [User, Image,Category],
+      include: [User, Image,Category,Question],
     });
     if(foundPost) return res.json(foundPost);
     res.status(400).json({msg:'post Not found'})

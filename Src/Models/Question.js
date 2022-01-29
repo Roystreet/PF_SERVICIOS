@@ -4,18 +4,19 @@ const {
 } = require("sequelize");
 const Post = require("./Post");
 
-const Review = sequelize.define("Review", {
+const Question = sequelize.define("Question", {
   description: {
     type: DataTypes.TEXT,
+    unique:true 
   },
-  rating: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  reply: {
+    type: DataTypes.TEXT
+
   },
 
 });
-Post.hasMany(Review, {
+Post.hasMany(Question, {
   foreignKey: "PostId",
 });
-Review.belongsTo(Post);
-module.exports = Review;
+Question.belongsTo(Post);
+module.exports = Question;
