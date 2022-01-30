@@ -1,4 +1,5 @@
 const mercadopago = require("mercadopago");
+const axios = require("axios").default();
 
 mercadopago.configure({
   access_token:
@@ -24,6 +25,7 @@ const createPreference = async (req, res) => {
 
 const feedback = async (req, res) => {
   const data = req.query;
+
   console.log(data);
   res.redirect("http://localhost:3001/");
 };
