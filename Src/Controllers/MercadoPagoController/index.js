@@ -6,15 +6,9 @@ mercadopago.configure({
 });
 
 const createPreference = async (req, res) => {
+  console.log(req.body.item);
   const preference = {
-    items: [
-      {
-        title: "algo",
-        description: "algo",
-        unit_price: 20,
-        quantity: 20,
-      },
-    ],
+    items: req.body.item,
     back_urls: {
       success: "http://localhost:4000/api/feedback",
       failure: "http://localhost:4000/api/feedback",
