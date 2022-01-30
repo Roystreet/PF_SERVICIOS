@@ -1,19 +1,16 @@
 const router = require("express").Router();
-const {
-  getCountries
-} = require("../Controllers/CountryControllers");
+const { getCountries } = require("../Controllers/CountryControllers");
 const {
   getPosts,
   getPostById,
   getPostUsers,
 } = require("../Controllers/PostControllers");
+const { createUsers, logIn } = require("../Controllers/UserControllers");
+const { getCategories } = require("../Controllers/CategoryControllers");
 const {
-  createUsers,
-  logIn
-} = require("../Controllers/UserControllers");
-const {
-  getCategories
-} = require("../Controllers/CategoryControllers");
+  createPreference,
+  feedback,
+} = require("../Controllers/MercadoPagoController");
 
 // Country
 router.get("/countries", getCountries);
@@ -28,4 +25,6 @@ router.post("/login", logIn);
 // Category
 router.get("/category", getCategories);
 //
+router.post("/checkout", createPreference);
+router.get("/feedback", feedback);
 module.exports = router;
