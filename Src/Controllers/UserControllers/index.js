@@ -76,14 +76,14 @@ const deleteUser = async (req, res) => {
 };
 
 const logIn = async (req, res) => {
-  try {
+
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username: username } });
 
     if (user) {
       if (bcrypt.compareSync(password, user.password)) {
         res.status(200).json({
-          msg: " usuario logueado",
+          msg: "user logged",
           token: generateToken({ username: username, rol: user.role }),
           id: user.id,
           username: user.username,
@@ -92,15 +92,15 @@ const logIn = async (req, res) => {
           rol: user.role,
         });
       } else {
-        res.status(403).json({ msg: " Incorrect Password" });
+         res.json({ msg:'Wrong Password'})
       }
     } else {
-      res.status(404).json({ msg: " Username not found" });
+      res.json({ msg:'Username not found'})
     }
-  } catch (err) {
-    console.log(err);
-  }
+
+
 };
+
 
 const resetPasswordForce = async (req, res) => {
   try {
