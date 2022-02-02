@@ -20,14 +20,14 @@ const createPreference = async (req, res) => {
 
   const chargeData = await mercadopago.preferences.create(preference);
   console.log(chargeData);
-  res.status(200).json({ res: chargeData.body.init_point });
+  res.status(200).json({ res: chargeData.body.init_point }); //status(200).json({ res: chargeData.body.init_point });
 };
 
 const feedback = async (req, res) => {
   const data = req.query;
 
   console.log(data);
-  res.redirect("http://localhost:3001/");
+  res.redirect("http://localhost:3000/");
 };
 
 module.exports = {
