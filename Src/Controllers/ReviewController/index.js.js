@@ -3,11 +3,11 @@ const Review = require("../../Models/Review");
 
 const createReview = async (req, res) => {
   try {
-
     const review = await Review.create({
       description: req.body.description,
       rating: req.body.rating,
       PostId: req.body.PostId,
+      author: req.body.author,
     });
     const data = await Post.findByPk(req.body.PostId, {
       include: [Review]
@@ -86,8 +86,10 @@ const deleteReview = async (req, res) => {
 }
 const getReviewByPost = async (req, res) => {
   try {
-    const id = req.body.PostId;
-    const post = await Post.findByPk(id);
+    const {id} = req.params;
+    const post = await Post.findByPk(id, {
+      include: Review
+    });
     if (post) {
       res.status(200).json(post);
     } else {
