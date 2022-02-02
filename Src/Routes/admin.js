@@ -58,7 +58,7 @@ router.get("/email", sendEmail);
 router.post("/review", createReview)
 router.put("/review", updateReview)
 router.delete("/review", deleteReview)
-router.get("/review", getReviewByPost)
+router.get("/review/:id", getReviewByPost)
 
 
 module.exports = router;

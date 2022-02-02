@@ -83,7 +83,9 @@ const logIn = async (req, res) => {
     if (user) {
       if (bcrypt.compareSync(password, user.password)) {
         res.status(200).json({
+
           msg: "user logged",
+
           token: generateToken({ username: username, rol: user.role }),
           id: user.id,
           username: user.username,
@@ -92,10 +94,12 @@ const logIn = async (req, res) => {
           rol: user.role,
         });
       } else {
+
          res.json({ msg:'Wrong Password'})
       }
     } else {
       res.json({ msg:'Username not found'})
+
     }
 
 

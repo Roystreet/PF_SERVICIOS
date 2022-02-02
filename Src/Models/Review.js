@@ -7,11 +7,16 @@ const Post = require("./Post");
 const Review = sequelize.define("Review", {
   description: {
     type: DataTypes.TEXT,
+    allowNull: false
   },
   rating: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  author: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  }
 
 });
 Post.hasMany(Review, {
