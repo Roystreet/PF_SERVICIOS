@@ -7,5 +7,6 @@ const Category = require("./Category.js");
 const Image = require("./Image.js");
 const Review = require("./Review");
 const Question = require("./Question");
+const OrderDetail = require("./OrderDetail");
 
-module.exports = sequelize
+module.exports = sequelize;
