@@ -27,7 +27,7 @@ const Post = sequelize.define("Post", {
     defaultValue: 0,
   },
   status: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.BOOLEAN, // TODO: estado del porducto nuevo/usado?
     defaultValue: true,
   },
 });
