@@ -1,6 +1,6 @@
-const sequelize = require("./Src/database");
-const Post = require("./Src/Models/Post");
 
+const Post = require("./Src/Models/Post");
+let sequelize = require("./Src/Models/index")
 console.log(sequelize.models);
 function idRamdom(max) {
 
@@ -8,12 +8,19 @@ function idRamdom(max) {
 
 }
 async function joinPostCategories() {
+
   try {
-    let posts = await Post.findAll()
-    let prom = posts.map(p=>{
-      return sequelize.query(`INSERT INTO public. "CategoryPost" ("createdAt", "updatedAt","CategoryId", "PostId")
-      VALUES (NOW() ,NOW(),${idRamdom(15)}, ${p.id})`)
-    })
+    let{CategoryPost} = sequelize.models
+
+    if(CategoryPost.count()){
+      let posts = await Post.findAll()
+      let prom = posts.map(p=>{
+        return sequelize.query(`INSERT INTO public. "CategoryPost" ("createdAt", "updatedAt","CategoryId", "PostId")
+        VALUES (NOW() ,NOW(),${idRamdom(15)}, ${p.id})`)
+      })
+
+    }
+
 
   } catch (e) {
      console.log(e);
