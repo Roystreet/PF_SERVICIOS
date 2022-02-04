@@ -31,7 +31,7 @@ const getOrders = async (req, res) => {
         delivery_adress: data.delivery_address,
         status: data.status,
         total: data.total,
-        created: data.created,
+        created: data.createdAt,
         user: {
           id: data.User.id,
           username: data.User.username,
