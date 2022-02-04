@@ -33,8 +33,10 @@ const getPosts = async (req, res, next) => {
   }
 };
 async function createPosts(req, res) {
+  console.log('hola', req.body)
   try {
     let post = req.body; //en el body ya se incluye el UserId
+    console.log(post); //
     let addedPost = await Post.create({
       ...post,
     });

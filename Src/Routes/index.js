@@ -6,6 +6,6 @@ const { jwtMiddleware } = require("../Controllers/jwtController/index");
 
 router.use("/", public);
 router.use("/customer", jwtMiddleware, customer);
-router.use("/admin", jwtMiddleware, admin);
+router.use("/admin", admin);
 
 module.exports = router;
