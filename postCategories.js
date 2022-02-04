@@ -3,8 +3,11 @@ const Post = require("./Src/Models/Post");
 let sequelize = require("./Src/Models/index")
 console.log(sequelize.models);
 function idRamdom(max) {
-
-       return Math.floor(Math.random() * max)
+  let result = 0
+  while(result === 0) {
+    result = Math.floor(Math.random() * max)
+  }
+  return result
 
 }
 async function joinPostCategories() {
@@ -16,7 +19,7 @@ async function joinPostCategories() {
       let posts = await Post.findAll()
       let prom = posts.map(p=>{
         return sequelize.query(`INSERT INTO public. "CategoryPost" ("createdAt", "updatedAt","CategoryId", "PostId")
-        VALUES (NOW() ,NOW(),${idRamdom(15)}, ${p.id})`)
+        VALUES (NOW() ,NOW(),${idRamdom(14)}, ${p.id})`)
       })
 
     }
