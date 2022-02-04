@@ -103,7 +103,7 @@ const transOrder = async (item, payer) => {
       .reduce((acc, item) => acc + item);
     const order = await Order.create(
       {
-        delivery_adress: payer.address.street_name || "direccion",
+        delivery_adress: payer.address.street_name || "direccion de prueba ",
         total: totalOrder,
         UserId: payer.id || 1,
       },
