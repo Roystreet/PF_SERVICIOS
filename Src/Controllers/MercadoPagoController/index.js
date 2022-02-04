@@ -33,16 +33,22 @@ const feedback = async (req, res) => {
   const { status, preference_id } = req.query;
   //console.log(data);
   // res.redirect("http://localhost:3000/");
-  const preference = await axios.get(`${urlMp}/${preference_id}`, {
-    headers: {
-      Authorization: `Bearer ${accesMp}`,
-    },
-  });
-  const { items, payer } = preference.data;
-  //realizamos la transacción
-  await transOrder(items, payer);
-  // console.log(items, payer);
-  await res.json({ status: status, preference_id: preference_id });
+  if (status == "approved") {
+    const preference = await axios.get(`${urlMp}/${preference_id}`, {
+      headers: {
+        Authorization: `Bearer ${accesMp}`,
+      },
+    });
+    const { items, payer } = preference.data;
+    //realizamos la transacción
+    await transOrder(items, payer);
+    // console.log(items, payer);
+    res.redirect("http://localhost:3000/checkout/success");
+  } else if (status == "failure") {
+    res.redirect("http://localhost:3000/checkout/failure");
+  } else {
+    res.redirect("http://localhost:3000/checkout/pending");
+  }
 };
 
 module.exports = {
