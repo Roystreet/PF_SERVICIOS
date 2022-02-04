@@ -1,4 +1,9 @@
 const mercadopago = require("mercadopago");
+const axios = require("axios").default;
+const urlMp = "https://api.mercadopago.com/checkout/preferences";
+const { transOrder } = require("../OrderControllers/index");
+const accesMp =
+  "TEST-8815536356433300-012714-798045927f1e8d0e17b1412b6152bf2c-653565141";
 mercadopago.configure({
   access_token:
     "TEST-8815536356433300-012714-798045927f1e8d0e17b1412b6152bf2c-653565141",
@@ -25,9 +30,19 @@ const createPreference = async (req, res) => {
 };
 
 const feedback = async (req, res) => {
-  const data = req.query;
-  console.log(data);
-  res.redirect("http://localhost:3000/");
+  const { status, preference_id } = req.query;
+  //console.log(data);
+  // res.redirect("http://localhost:3000/");
+  const preference = await axios.get(`${urlMp}/${preference_id}`, {
+    headers: {
+      Authorization: `Bearer ${accesMp}`,
+    },
+  });
+  const { items, payer } = preference.data;
+  //realizamos la transacción
+  await transOrder(items, payer);
+  // console.log(items, payer);
+  await res.json({ status: status, preference_id: preference_id });
 };
 
 module.exports = {

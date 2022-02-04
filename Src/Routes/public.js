@@ -27,4 +27,5 @@ router.get("/category", getCategories);
 //
 router.post("/checkout", createPreference);
 router.get("/feedback", feedback);
+
 module.exports = router;
