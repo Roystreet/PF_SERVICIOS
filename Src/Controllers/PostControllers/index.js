@@ -15,6 +15,7 @@ const getPosts = async (req, res, next) => {
           name: {
             [Op.iLike]: `%${name}%`,
           },
+          status:true
         },
         include: [User, Image,Category, Question],
       });
@@ -22,6 +23,9 @@ const getPosts = async (req, res, next) => {
     }
 
     const dataFound = await Post.findAll({
+      where:{
+        status:true
+      },
       include: [User, Image, Category, Question],
     });
     res.status(200).json(dataFound);
@@ -170,6 +174,9 @@ async function getPostById(req, res) {
   try {
     let { id } = req.params;
     let foundPost = await Post.findByPk(id, {
+      where:{
+        status:true
+      },
       include: [User, Image,Category,Question],
     });
     if(foundPost) return res.json(foundPost);
@@ -178,6 +185,33 @@ async function getPostById(req, res) {
     console.log(err);
   }
 }
+
+const adminGetPosts = async (req, res, next) => {
+  try {
+    let { name } = req.query;
+    if (name) {
+      let posts = await Post.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          }
+        },
+        include: [User, Image,Category, Question],
+      });
+      return res.json(posts);
+    }
+
+    const dataFound = await Post.findAll({
+      include: [User, Image, Category, Question],
+    });
+    res.status(200).json(dataFound);
+    return;
+  } catch (error) {
+    res.status(500).json({ msg: "error" });
+    console.log("Error", Error);
+    return;
+  }
+};
 module.exports = {
   getPosts,
   getPostUsers,
@@ -185,4 +219,5 @@ module.exports = {
   deletePosts,
   createPosts,
   getPostById,
+  adminGetPosts
 };
