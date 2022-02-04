@@ -26,7 +26,7 @@ async function joinPostCategories() {
 
 
   } catch (e) {
-     console.log(e);
+     console.log("el error en el scripts CategoryPost se está arreglando. Tenga paciencia");
   }
 
 }
