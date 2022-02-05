@@ -13,6 +13,7 @@ const {
   deleteUser,
   createUsers,
   resetPasswordForce,
+  updateUsers,
 } = require("../Controllers/UserControllers");
 const {
   postCategory,
@@ -45,7 +46,7 @@ router.get("/users", getUsers);
 router.get("/user/:id", getUsersById);
 router.delete("/user/:id", deleteUser);
 router.put("/user/reset-password-force", resetPasswordForce);
-router.put("/user/:id");
+router.put("/user/:id", updateUsers);
 router.post("/user", createUsers);
 // Route for Category
 router.post("/category", postCategory);
