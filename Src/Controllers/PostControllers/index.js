@@ -42,8 +42,8 @@ async function createPosts(req, res) {
     let addedPost = await Post.create({
       ...post,
     });
-    if(post.images){
-      let addingImages = post.images.map((link) => {
+    if(post.Images){
+      let addingImages = post.Images.map((link) => {
         return Image.create({
           link: link,
           PostId: addedPost.id,
@@ -53,8 +53,8 @@ async function createPosts(req, res) {
 
     }
 
-    if(post.categories){
-      let addingCategories = post.categories.map((id) => {
+    if(post.Categories){
+      let addingCategories = post.Categories.map((id) => {
         return Category.findByPk(id);
       });
       let categoriesInDB = await Promise.all(addingCategories);
