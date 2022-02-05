@@ -107,21 +107,19 @@ const logIn = async (req, res) => {
 
 
 const resetPasswordForce = async (req, res) => {
+  console.log(req.body)
   try {
-    const { username, password } = req.body;
-    const user = await User.findAll({
-      where: {
-        username: username,
-      },
-    });
-    console.log(user);
-    if (user.length > 0) {
+    const { id , password } = req.body;
+    
+    const user = await User.findByPk(id);
+    
+    if (user) {
       const hashPassword = await bcrypt.hashSync(password, salt);
       await User.update(
         { password: hashPassword },
         {
           where: {
-            username: username,
+            username: user,
           },
         }
       );
