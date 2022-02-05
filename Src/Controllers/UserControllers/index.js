@@ -61,7 +61,64 @@ const createUsers = async (req, res) => {
   }
 };
 
-const updateUsers = async (req, res) => {};
+const updateUsers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { input, type } = req.body;
+    const data = await User.findByPk(id, {
+      include: [Country],
+    });
+
+    switch (type) {
+      case "NAME":
+        data.update({
+          first_name: input,
+        });
+        break;
+      case "LASTNAME":
+        data.update({
+          last_name: input,
+        });
+        break;
+      case "USERNAME":
+        data.update({
+          username: input,
+        });
+        break;
+      case "DNI":
+        data.update({
+          dni: input,
+        });
+        break;
+      case "EMAIL":
+        data.update({
+          email: input,
+        });
+        break;
+      case "PHONE":
+        data.update({
+          phone: input,
+        });
+        break;
+      case "PASSWORD":
+        const hashPassword = await bcrypt.hashSync(input, salt);
+        data.update({
+          password: hashPassword,
+        });
+        break;
+        // Missing one case for image, need to ask how images are handle, supposed to be handle with firebase
+        // Also missing country section, pending if country can or can not be changed
+      default:
+        break;
+    }
+    res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      msg: "error"
+    });
+  }
+};
 
 const deleteUser = async (req, res) => {
   try {
