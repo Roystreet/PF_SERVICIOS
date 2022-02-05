@@ -65,15 +65,7 @@ async function paddingData() {
     let conUs = await User.count();
 
     if (conUs == 0) {
-      await axios.post(
-        `http://localhost:${process.env.PORT || 4000}/api/register`,
-        {
-          username: "henry",
-          password: "101010",
-          image:
-            "https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg",
-        }
-      );
+      
       setTimeout(async () => {
         await sequelize.query(`INSERT INTO public."Users"(
 
@@ -190,7 +182,17 @@ async function paddingData() {
            (default,'Muchos Productos','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1),
            (default,'Papa','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1)
          `).catch(err=>console.log(err));
+         await axios.post(
+          `http://localhost:${process.env.PORT || 4000}/api/register`,
+          {
+            username: "henry",
+            password: "101010",
+            image:
+              "https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg",
+          }
+        );
       }, 8000);
+      
     }
   } catch (err) {
     console.log(err);

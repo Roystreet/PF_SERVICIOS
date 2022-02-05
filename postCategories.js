@@ -2,12 +2,14 @@
 const Post = require("./Src/Models/Post");
 let sequelize = require("./Src/Models/index")
 console.log(sequelize.models);
+var itCategories = 1
 function idRamdom(max) {
-  let result = 0
-  while(result === 0) {
-    result = Math.floor(Math.random() * max)
-  }
-  return result
+     if (itCategories==16) {
+       itCategories = 1
+     }
+     //Math.floor(Math.random() * max)+1
+     itCategories++
+     return itCategories
 
 }
 async function joinPostCategories() {
@@ -17,16 +19,22 @@ async function joinPostCategories() {
 
     if(CategoryPost.count()){
       let posts = await Post.findAll()
-      let prom = posts.map(p=>{
-        return sequelize.query(`INSERT INTO public. "CategoryPost" ("createdAt", "updatedAt","CategoryId", "PostId")
-        VALUES (NOW() ,NOW(),${idRamdom(14)}, ${p.id})`)
-      })
+      let i=0
+      while (i<3) {
+        let prom = posts.map(p=>{
+          return sequelize.query(`INSERT INTO public. "CategoryPost" ("createdAt", "updatedAt","CategoryId", "PostId")
+          VALUES (NOW() ,NOW(),${idRamdom(15)}, ${p.id})`)
+        })
+        Promise.all(prom).catch(e=>console.log("tal vez siga funcionando el server"))
+        i++
+      }
+
 
     }
 
 
   } catch (e) {
-     console.log("el error en el scripts CategoryPost se está arreglando. Tenga paciencia");
+     console.log("tal vez siga funcionando el server");
   }
 
 }
