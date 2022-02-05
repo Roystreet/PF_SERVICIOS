@@ -17,7 +17,7 @@ async function joinPostCategories() {
   try {
     let{CategoryPost} = sequelize.models
 
-    if(CategoryPost.count()){
+    if(CategoryPost.count()==0){
       let posts = await Post.findAll()
       let i=0
       while (i<3) {
