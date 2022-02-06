@@ -3,7 +3,7 @@ const Order = require("../../Models/Order");
 const User = require("../../Models/User");
 const Post = require("../../Models/Post");
 const OrderDetail = require("../../Models/OrderDetail");
-const sequelize = require("../../database");
+const sequelize = require("../../Database");
 const { QueryTypes } = require("sequelize");
 
 const createOrder = async (req, res) => {
