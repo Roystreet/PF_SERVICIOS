@@ -36,6 +36,11 @@ const User = sequelize.define("User", {
     type: DataTypes.ENUM("user", "admin", "superAdmin"),
     allowNull: false,
     defaultValue: "user"
+  },
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 });
 
