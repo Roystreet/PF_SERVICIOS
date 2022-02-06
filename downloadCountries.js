@@ -1,5 +1,5 @@
 let axios = require("axios");
-const sequelize = require("./Src/Database");
+const sequelize = require("./Src/database");
 const Category = require("./Src/Models/Category");
 let Country = require("./Src/Models/Country");
 const User = require("./Src/Models/User");
