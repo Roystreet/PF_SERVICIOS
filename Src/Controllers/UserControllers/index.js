@@ -131,7 +131,7 @@ const deleteUser = async (req, res) => {
 
     const data = await User.findByPk(id)
     data.update({
-      status:false
+      status: false
     })
 
     res.status(200).json({ msg: 'delete success' });
