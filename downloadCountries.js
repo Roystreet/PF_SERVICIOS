@@ -60,7 +60,7 @@ async function paddingData() {
       `);
       console.log("creating Categories");
     }
-    
+
     //userDefault
     let conUs = await User.count();
 
@@ -79,10 +79,10 @@ async function paddingData() {
 
          id, first_name, last_name, username, password, email, dni, phone,image, "createdAt", "updatedAt", "CountryId", role)
          VALUES (default,'Nicolas','Nicolas','Nicolas','${password}','nico@nico.com', '3423425','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'admin'),
-         (default,'Marcos','Marcos','Marcos', '${password}','nico@nico.com', '34234275','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'user'),
-         (default,'juanda','juanda','juanda','${password}','nico@nico.com', '34234285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'admin'),
-         (default,'alvaro','alvaro','alvaro','${password}','nico@nico.com', '342334285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'user'),
-         (default,'roiner','roiner','roiner','${password}','nico@nico.com', '3442334285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'admin');
+         (default,'Marcos','Marcos','Marcos', '${password}','nico2@nico.com', '34234275','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'user'),
+         (default,'juanda','juanda','juanda','${password}','nico1@nico.com', '34234285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'admin'),
+         (default,'alvaro','alvaro','alvaro','${password}','nico3@nico.com', '342334285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'user'),
+         (default,'roiner','roiner','roiner','${password}','nico4@nico.com', '3442334285','42324253','https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg', NOW(), NOW(), 1, 'admin');
 
 
          INSERT INTO public."Posts"(
@@ -189,7 +189,7 @@ async function paddingData() {
            (default,'Producto Valioso','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1),
            (default,'Muchos Productos','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1),
            (default,'Papa','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros.' ,${getPriceRandom()}, 5,true,NOW() ,NOW(),1)
-         `).catch(err=>console.log(err));
+         `).catch(err => console.log(err));
       }, 8000);
     }
   } catch (err) {
