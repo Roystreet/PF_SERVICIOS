@@ -1,8 +1,8 @@
 // Users
-const User = require("../../Models/User");
-const Country = require("../../Models/Country");
-const { generateToken } = require("../jwtController");
-const bcrypt = require("bcrypt");
+const User = require('../../Models/User');
+const Country = require('../../Models/Country');
+const { generateToken } = require('../jwtController');
+const bcrypt = require('bcrypt');
 const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
 
@@ -21,7 +21,7 @@ const getUsersById = async (req, res) => {
     console.log(user);
 
     if (user) return res.status(200).json(user);
-    return res.status(404).json({ msg: "User not found" });
+    return res.status(404).json({ msg: 'User not found' });
   } catch (err) {
     console.log(err);
   }
@@ -53,7 +53,7 @@ const createUsers = async (req, res) => {
       CountryId: country,
     });
 
-    console.log("user created");
+    console.log('user created');
 
     res.status(200).json(user);
   } catch (err) {
@@ -70,44 +70,49 @@ const updateUsers = async (req, res) => {
     });
 
     switch (type) {
-      case "NAME":
+      case 'NAME':
         data.update({
           first_name: input,
         });
         break;
-      case "LASTNAME":
+      case 'LASTNAME':
         data.update({
           last_name: input,
         });
         break;
-      case "USERNAME":
+      case 'USERNAME':
         data.update({
           username: input,
         });
         break;
-      case "DNI":
+      case 'DNI':
         data.update({
           dni: input,
         });
         break;
-      case "EMAIL":
+      case 'EMAIL':
         data.update({
           email: input,
         });
         break;
-      case "PHONE":
+      case 'PHONE':
         data.update({
           phone: input,
         });
         break;
-      case "PASSWORD":
+      case 'ROLE':
+        data.update({
+          role: input,
+        });
+        break;
+      case 'PASSWORD':
         const hashPassword = await bcrypt.hashSync(input, salt);
         data.update({
           password: hashPassword,
         });
         break;
-        // Missing one case for image, need to ask how images are handle, supposed to be handle with firebase
-        // Also missing country section, pending if country can or can not be changed
+      // Missing one case for image, need to ask how images are handle, supposed to be handle with firebase
+      // Also missing country section, pending if country can or can not be changed
       default:
         break;
     }
@@ -115,7 +120,7 @@ const updateUsers = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      msg: "error"
+      msg: 'error',
     });
   }
 };
@@ -124,52 +129,48 @@ const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await User.destroy({ where: { id: id } });
+    const data = await User.findByPk(id)
+    data.update({
+      status:false
+    })
 
-    res.status(200).json({ msg: "  delete success" });
+    res.status(200).json({ msg: 'delete success' });
   } catch (err) {
     console.log(err);
   }
 };
 
 const logIn = async (req, res) => {
+  const { username, password } = req.body;
+  const user = await User.findOne({ where: { username: username } });
 
-    const { username, password } = req.body;
-    const user = await User.findOne({ where: { username: username } });
+  if (user) {
+    if (bcrypt.compareSync(password, user.password)) {
+      res.status(200).json({
+        msg: 'user logged',
 
-    if (user) {
-      if (bcrypt.compareSync(password, user.password)) {
-        res.status(200).json({
-
-          msg: "user logged",
-
-          token: generateToken({ username: username, rol: user.role }),
-          id: user.id,
-          username: user.username,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          rol: user.role,
-        });
-      } else {
-
-         res.json({ msg:'Wrong Password'})
-      }
+        token: generateToken({ username: username, rol: user.role }),
+        id: user.id,
+        username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        rol: user.role,
+      });
     } else {
-      res.json({ msg:'Username not found'})
-
+      res.json({ msg: 'Wrong Password' });
     }
-
-
+  } else {
+    res.json({ msg: 'Username not found' });
+  }
 };
 
-
 const resetPasswordForce = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
-    const { id , password } = req.body;
-    
+    const { id, password } = req.body;
+
     const user = await User.findByPk(id);
-    
+
     if (user) {
       const hashPassword = await bcrypt.hashSync(password, salt);
       await User.update(
@@ -180,13 +181,13 @@ const resetPasswordForce = async (req, res) => {
           },
         }
       );
-      res.status(200).json({ msg: "Password Restore " });
+      res.status(200).json({ msg: 'Password Restore ' });
     } else {
-      res.status(404).json({ msg: "User not found" });
+      res.status(404).json({ msg: 'User not found' });
     }
   } catch (err) {
     console.log(err);
-    res.status(404).json({ msg: "error " });
+    res.status(404).json({ msg: 'error ' });
   }
 };
 
