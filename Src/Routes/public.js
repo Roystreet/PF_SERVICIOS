@@ -1,5 +1,7 @@
 const router = require("express").Router();
+const axios = require('axios');
 const { getCountries } = require("../Controllers/CountryControllers");
+const decode = require('jwt-decode');
 const {
   getPosts,
   getPostById,
@@ -11,6 +13,7 @@ const {
   createPreference,
   feedback,
 } = require("../Controllers/MercadoPagoController");
+const { GoogleAuth } = require("../Controllers/AuthGoogleController");
 
 // Country
 router.get("/countries", getCountries);
@@ -27,5 +30,9 @@ router.get("/category", getCategories);
 //
 router.post("/checkout", createPreference);
 router.get("/feedback", feedback);
-
+//loginGOOGLE
+router.post("/auth/google/callback", GoogleAuth)
+//deocerjwt
+router.post("/decoderGoogle", GoogleAuth)
+//
 module.exports = router;
