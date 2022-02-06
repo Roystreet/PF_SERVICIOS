@@ -16,14 +16,14 @@ const User = sequelize.define("User", {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
+    unique: true
   },
   dni: {
     type: DataTypes.STRING,
-  
+
     unique: true,
   },
   phone: {
@@ -33,9 +33,9 @@ const User = sequelize.define("User", {
     type: DataTypes.TEXT,
   },
   role: {
-    type:DataTypes.ENUM("user","admin","superAdmin"),
-    allowNull:false,
-    defaultValue:"user"
+    type: DataTypes.ENUM("user", "admin", "superAdmin"),
+    allowNull: false,
+    defaultValue: "user"
   }
 });
 

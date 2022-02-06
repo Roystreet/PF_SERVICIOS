@@ -106,8 +106,8 @@ const updateUsers = async (req, res) => {
           password: hashPassword,
         });
         break;
-        // Missing one case for image, need to ask how images are handle, supposed to be handle with firebase
-        // Also missing country section, pending if country can or can not be changed
+      // Missing one case for image, need to ask how images are handle, supposed to be handle with firebase
+      // Also missing country section, pending if country can or can not be changed
       default:
         break;
     }
@@ -134,30 +134,30 @@ const deleteUser = async (req, res) => {
 
 const logIn = async (req, res) => {
 
-    const { username, password } = req.body;
-    const user = await User.findOne({ where: { username: username } });
+  const { username, password } = req.body;
+  const user = await User.findOne({ where: { username: username } });
 
-    if (user) {
-      if (bcrypt.compareSync(password, user.password)) {
-        res.status(200).json({
+  if (user) {
+    if (bcrypt.compareSync(password, user.password)) {
+      res.status(200).json({
 
-          msg: "user logged",
+        msg: "user logged",
 
-          token: generateToken({ username: username, rol: user.role }),
-          id: user.id,
-          username: user.username,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          rol: user.role,
-        });
-      } else {
-
-         res.json({ msg:'Wrong Password'})
-      }
+        token: generateToken({ username: username, rol: user.role }),
+        id: user.id,
+        username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        rol: user.role,
+      });
     } else {
-      res.json({ msg:'Username not found'})
 
+      res.json({ msg: 'Wrong Password' })
     }
+  } else {
+    res.json({ msg: 'Username not found' })
+
+  }
 
 
 };
