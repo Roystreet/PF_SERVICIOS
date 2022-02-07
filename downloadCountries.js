@@ -15,7 +15,7 @@ let descriptionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 
 function getPriceRandom() {
  let price = Math.floor(Math.random() * 100000);
- console.log
+ return price
 }
 
 //bajar todo de la api para la base de datos
