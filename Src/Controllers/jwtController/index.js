@@ -36,8 +36,8 @@ const jwtMiddleware = async (req, res, next) => {
       //al ejecutar next(),el usuario podrá acceder a la rut
     } else {
       //si el token no se puede verificar, se devuelve un error
-      const tokeAuth = await axios.get(" https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + token)
-      if (tokeAuth) {
+      const tokeAuth = await axios.get("https://www.googleapis.com/oauth2/v1/tokeninfo?id_token=" + token)
+      if (!tokeAuth.error) {
         next()
       }
       res.status(401).json({ msg: "Invalid token" });
