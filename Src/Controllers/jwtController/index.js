@@ -1,3 +1,4 @@
+const { default: axios } = require("axios");
 const jwt = require("jsonwebtoken");
 //al recibir los datos del login *usuario* *contraseña* se verifica que el usuario exista en la base de datos
 //y que la contraseña sea correcta (encriptada) y se genera un token de acceso (generateToken) que se devuelve al cliente
@@ -22,13 +23,12 @@ function decodeToken(token) {
 
 //el usuario al entrar a una ruta protegida debe devolver un token de acceso en la cabecera con el nombre de "token"
 
-const jwtMiddleware = (req, res, next) => {
+const jwtMiddleware = async (req, res, next) => {
   //recibiendo el token de la cabecera
   const token = req.headers["token"];
   if (token) {
     //verificando que el token sea correcto
     const verified = verifyToken(token);
-
     if (verified) {
       //si la verificación es correcta se pasa al siguiente middleware
       next();
@@ -36,6 +36,10 @@ const jwtMiddleware = (req, res, next) => {
       //al ejecutar next(),el usuario podrá acceder a la rut
     } else {
       //si el token no se puede verificar, se devuelve un error
+      const tokeAuth = await axios.get(" https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + token)
+      if (tokeAuth) {
+        next()
+      }
       res.status(401).json({ msg: "Invalid token" });
       return false;
     }
