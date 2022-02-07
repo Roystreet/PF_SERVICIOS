@@ -111,7 +111,11 @@ const updateUsers = async (req, res) => {
           password: hashPassword,
         });
         break;
-      // Missing one case for image, need to ask how images are handle, supposed to be handle with firebase
+        case "IMAGE":
+          data.update({
+            image: input,
+          });
+          break;
       // Also missing country section, pending if country can or can not be changed
       default:
         break;
