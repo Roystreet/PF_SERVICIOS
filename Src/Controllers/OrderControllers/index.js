@@ -89,7 +89,17 @@ const getOrderUser = async (req, res) => {
 
 const updateStatusOrder = async (req, res) => {
   try {
-  } catch (err) {}
+    const { status } = req.body;
+    const order = await Order.findByPk(parseInt(req.params.id));
+    if (order) {
+      await Order.update({ status: status }, { where: { id: req.params.id } });
+      res.json({ msg: "Order updated successfully" });
+    } else {
+      res.json({ msg: "Order not found" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getOrderForUser = async (req, res) => {
@@ -217,4 +227,5 @@ module.exports = {
   transOrder,
   getOrderForUser,
   getOrderDetailId,
+  updateStatusOrder,
 };
