@@ -4,7 +4,6 @@ const User = require("../../Models/User");
 const Post = require("../../Models/Post");
 const OrderDetail = require("../../Models/OrderDetail");
 const sequelize = require("../../database");
-const { QueryTypes } = require("sequelize");
 
 const createOrder = async (req, res) => {
   try {
@@ -93,6 +92,44 @@ const updateStatusOrder = async (req, res) => {
   } catch (err) {}
 };
 
+const getOrderForUser = async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      include: [User, { model: OrderDetail, include: { model: Post } }],
+      where: { username: req.username },
+    });
+    const orderResul = orders.map((data) => {
+      return {
+        id: data.id,
+        delivery_adress: data.delivery_address,
+        status: data.status,
+        total: data.total,
+        created: data.createdAt,
+        user: {
+          id: data.User.id,
+          username: data.User.username,
+        },
+        OrderDetail: data.OrderDetails.map((data) => {
+          return {
+            id: data.id,
+            amount: data.amount,
+            posts: {
+              id: data.Post.id,
+              name: data.Post.name,
+              description: data.Post.description,
+              price: data.Post.price,
+            },
+          };
+        }),
+      };
+    });
+
+    res.status(200).json(orderResul);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const transOrder = async (item, payer) => {
   const t = await sequelize.transaction();
   try {
@@ -140,4 +177,5 @@ module.exports = {
   createOrder,
   getOrderUser,
   transOrder,
+  getOrderForUser,
 };
