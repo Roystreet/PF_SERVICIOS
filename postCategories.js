@@ -17,7 +17,7 @@ async function joinPostCategories() {
   try {
     let{CategoryPost} = sequelize.models
     let count = await CategoryPost.count()
-    
+
     if(count==0){
       let posts = await Post.findAll()
       let i=0
@@ -36,7 +36,10 @@ async function joinPostCategories() {
 
   } catch (e) {
      console.log("tal vez siga funcionando el server");
+  }finally{
+    console.log("product with categories");
   }
+
 
 }
 setTimeout(()=>{
