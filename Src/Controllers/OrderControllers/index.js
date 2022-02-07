@@ -5,20 +5,6 @@ const Post = require("../../Models/Post");
 const OrderDetail = require("../../Models/OrderDetail");
 const sequelize = require("../../database");
 
-const createOrder = async (req, res) => {
-  try {
-    const { posts, userId, total, delivery_adress } = req.body;
-    const newOrder = await Order.create({
-      delivery_adress: delivery_adress,
-      total: total,
-      UserId: userId,
-    });
-    await newOrder.setPosts(posts);
-    res.status(200).json(newOrder);
-  } catch (err) {
-    console.log(err);
-  }
-};
 const getOrders = async (req, res) => {
   try {
     const orders = await Order.findAll({
@@ -173,6 +159,7 @@ const transOrder = async (item, payer) => {
     }
     await Promise.all(promises);
     // commit de la transaccion
+    console.log(" orden creada ");
     await t.commit();
   } catch (err) {
     // en caso no pueda realizarse la transaccion regresamos los cambios realizados
@@ -222,7 +209,6 @@ const getOrderDetailId = async (req, res) => {
 module.exports = {
   getOrders,
   getOrderId,
-  createOrder,
   getOrderUser,
   transOrder,
   getOrderForUser,

@@ -22,7 +22,6 @@ const {
 const {
   getOrders,
   getOrderId,
-  createOrder,
   updateStatusOrder,
 } = require("../Controllers/OrderControllers");
 const { sendEmail } = require("../Controllers/SendEmailController");
@@ -52,7 +51,6 @@ router.delete("/category/:id", deleteCategory);
 // Route Orders
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
-router.post("/order", createOrder);
 router.put("/order", updateStatusOrder);
 // Route email
 router.get("/email", sendEmail);
