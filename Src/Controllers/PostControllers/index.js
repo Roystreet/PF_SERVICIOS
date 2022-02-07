@@ -5,6 +5,11 @@ const Category = require("../../Models/Category");
 const { Op } = require("sequelize");
 const  { CategoryPost}  = require("../../Models/index.js").models;
 const Question = require("../../Models/Question");
+let userIncluded = {
+    model: User,
+    attributes: ['username', "id"],
+
+  }
 
 const getPosts = async (req, res, next) => {
   try {
@@ -17,17 +22,17 @@ const getPosts = async (req, res, next) => {
           },
           status:true
         },
-        include: [User, Image,Category, Question],
+        include: [userIncluded, Image,Category, Question],
       });
-      return res.json(posts);
+      return res.json(posts );
     }
 
     const dataFound = await Post.findAll({
       where:{
         status:true
       },
-      include: [User, Image, Category, Question],
-    });
+      include: [userIncluded, Image, Category, Question],
+    }).catch(console.log);
     res.status(200).json(dataFound);
     return;
   } catch (error) {
@@ -177,7 +182,7 @@ async function getPostById(req, res) {
       where:{
         status:true
       },
-      include: [User, Image,Category,Question],
+      include: [userIncluded, Image,Category,Question],
     });
     if(foundPost) return res.json(foundPost);
     res.status(400).json({msg:'post Not found'})
@@ -196,13 +201,13 @@ const adminGetPosts = async (req, res, next) => {
             [Op.iLike]: `%${name}%`,
           }
         },
-        include: [User, Image,Category, Question],
+        include: [userIncluded, Image,Category, Question],
       });
       return res.json(posts);
     }
 
     const dataFound = await Post.findAll({
-      include: [User, Image, Category, Question],
+      include: [userIncluded, Image, Category, Question],
     });
     res.status(200).json(dataFound);
     return;
