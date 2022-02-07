@@ -35,4 +35,7 @@ router.post("/auth/google/callback", GoogleAuth)
 //deocerjwt
 router.post("/decoderGoogle", GoogleAuth)
 //
+router.post("/auth/callback", async (req, res) => {
+  res.status(200).redirect("http://localhost:3000/");
+})
 module.exports = router;

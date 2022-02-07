@@ -2,7 +2,15 @@ const decoder = require("jwt-decode");
 const User = require("../../Models/User");
 const GoogleAuth = async (req, res) => {
   try {
-    const data = decoder(req.query.token);
+    let token
+    if (req.body.credential) {
+      token = req.body.credential
+    }
+    else {
+      token = req.query.token
+    }
+    const data = decoder(token);
+    console.log(data, "asdasdasd");
     const user = await User.findOne({
       where: {
         email: data.email
@@ -11,7 +19,7 @@ const GoogleAuth = async (req, res) => {
     if (user) {
       return res.status(200).json({
         msg: "user logged",
-        token: req.query.token,
+        token: token,
         id: user.id,
         username: user.username,
         first_name: user.first_name,
@@ -27,7 +35,7 @@ const GoogleAuth = async (req, res) => {
       first_name: data.given_name,
       last_name: data.family_name,
       image: data.picture,
-      token: req.query.token,
+      token: token,
     }
     await User.create(dat)
     return res.status(200).json(dat)
