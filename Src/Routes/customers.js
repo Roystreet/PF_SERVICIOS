@@ -1,5 +1,8 @@
 const router = require("express").Router();
-const { getOrderForUser } = require("../Controllers/OrderControllers");
+const {
+  getOrderForUser,
+  getOrderDetailId,
+} = require("../Controllers/OrderControllers");
 const {
   createQuestion,
   replyQuestion,
@@ -7,6 +10,7 @@ const {
 } = require("../Controllers/QuestionController");
 
 router.get("/order-user", getOrderForUser);
+router.get("/order-detail/:id", getOrderDetailId);
 router.post("/question", createQuestion);
 router.put("/question", replyQuestion);
 router.delete("/question/:id", deleteQuestion);
