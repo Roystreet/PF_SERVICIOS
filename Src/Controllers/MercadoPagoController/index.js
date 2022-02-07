@@ -42,6 +42,7 @@ const feedback = async (req, res) => {
     const { items, payer } = preference.data;
     //realizamos la transacción
     await transOrder(items, payer);
+
     // console.log(items, payer);
     res.redirect("http://localhost:3000/checkout/success");
   } else if (status == "failure") {
