@@ -149,7 +149,7 @@ async function changeStatus(req, res) {
     let { id ,status } = req.body;
     let foundPost = await Post.findByPk(id)
     foundPost.update({postStatus: status})
-    res.status(400).json({ msg: 'post Not found' });
+    res.status(200).json({ msg: 'post Not found' });
   } catch (err) {
     console.log(err);
   }
