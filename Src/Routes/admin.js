@@ -6,6 +6,8 @@ const {
   getPostById,
   createPosts,
   adminGetPosts,
+  changeStatus
+
 } = require("../Controllers/PostControllers");
 const {
   getUsers,
@@ -38,6 +40,7 @@ router.put("/post", updatePosts);
 router.delete("/post/:id", deletePosts);
 router.post("/post", createPosts);
 router.get("/post", adminGetPosts);
+router.put("/post/updateStatus", changeStatus);
 // Route for Users
 router.get("/users", getUsers);
 router.get("/user/:id", getUsersById);
