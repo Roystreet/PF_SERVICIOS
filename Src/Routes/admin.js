@@ -6,7 +6,10 @@ const {
   getPostById,
   createPosts,
   adminGetPosts,
+<<<<<<< HEAD
   changeStatus
+=======
+>>>>>>> c0c23c40225779d622aecfe1e8939ce0ef7ccb69
 } = require("../Controllers/PostControllers");
 const {
   getUsers,
@@ -23,17 +26,14 @@ const {
 const {
   getOrders,
   getOrderId,
-  createOrder,
+  updateStatusOrder,
 } = require("../Controllers/OrderControllers");
-const {
-  sendEmail
-} = require("../Controllers/SendEmailController");
+const { sendEmail } = require("../Controllers/SendEmailController");
 const {
   createReview,
   updateReview,
   deleteReview,
-  getReviewByPost
-
+  getReviewByPost,
 } = require("../Controllers/ReviewController/index.js");
 const {} = require("../Controllers/ReviewController/index.js");
 
@@ -56,14 +56,13 @@ router.delete("/category/:id", deleteCategory);
 // Route Orders
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
-router.post("/order", createOrder);
+router.put("/order", updateStatusOrder);
 // Route email
 router.get("/email", sendEmail);
 // Route Review
-router.post("/review", createReview)
-router.put("/review", updateReview)
-router.delete("/review", deleteReview)
-router.get("/review/:id", getReviewByPost)
-
+router.post("/review", createReview);
+router.put("/review", updateReview);
+router.delete("/review", deleteReview);
+router.get("/review/:id", getReviewByPost);
 
 module.exports = router;
