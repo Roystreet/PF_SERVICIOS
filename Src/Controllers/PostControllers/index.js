@@ -1,10 +1,10 @@
-const Post = require("../../Models/Post");
-const User = require("../../Models/User");
-const Image = require("../../Models/Image");
-const Category = require("../../Models/Category");
-const { Op } = require("sequelize");
-const  { CategoryPost}  = require("../../Models/index.js").models;
-const Question = require("../../Models/Question");
+const Post = require('../../Models/Post');
+const User = require('../../Models/User');
+const Image = require('../../Models/Image');
+const Category = require('../../Models/Category');
+const { Op } = require('sequelize');
+const { CategoryPost } = require('../../Models/index.js').models;
+const Question = require('../../Models/Question');
 
 const getPosts = async (req, res, next) => {
   try {
@@ -15,24 +15,24 @@ const getPosts = async (req, res, next) => {
           name: {
             [Op.iLike]: `%${name}%`,
           },
-          status:true
+          status: true,
         },
-        include: [User, Image,Category, Question],
+        include: [User, Image, Category, Question],
       });
       return res.json(posts);
     }
 
     const dataFound = await Post.findAll({
-      where:{
-        status:true
+      where: {
+        status: true,
       },
       include: [User, Image, Category, Question],
     });
     res.status(200).json(dataFound);
     return;
   } catch (error) {
-    res.status(500).json({ msg: "error" });
-    console.log("Error", Error);
+    res.status(500).json({ msg: 'error' });
+    console.log('Error', Error);
     return;
   }
 };
@@ -42,7 +42,7 @@ async function createPosts(req, res) {
     let addedPost = await Post.create({
       ...post,
     });
-    if(post.Images){
+    if (post.Images) {
       let addingImages = post.Images.map((link) => {
         return Image.create({
           link: link,
@@ -50,22 +50,19 @@ async function createPosts(req, res) {
         });
       });
       await Promise.all(addingImages);
-
     }
 
-    if(post.Categories){
+    if (post.Categories) {
       let addingCategories = post.Categories.map((id) => {
         return Category.findByPk(id);
       });
       let categoriesInDB = await Promise.all(addingCategories);
-      await addedPost.addCategories(categoriesInDB)
-
+      await addedPost.addCategories(categoriesInDB);
     }
-
 
     res.status(201).json(addedPost);
   } catch (err) {
-    res.status(400).send("error. Verify request data");
+    res.status(400).send('error. Verify request data');
     console.log(err);
   }
 }
@@ -81,14 +78,14 @@ const getPostUsers = async (req, res, next) => {
           },
         },
         Image,
-		    Category,
-        Question
+        Category,
+        Question,
       ],
     });
     res.status(200).json(dataFound);
     return;
   } catch (error) {
-    console.log("Error: ", Error);
+    console.log('Error: ', Error);
 
     res.status(400).json();
   }
@@ -102,22 +99,20 @@ const updatePosts = async (req, res, next) => {
     const pk = req.body.id;
     //destroy category relation because after that it adds categories
     CategoryPost.findAll({
-      where:{
-         PostId:pk
-      }
-    })
-    .then(relation=>{
-      return relation.map(r=>r.destroy())
-    })
+      where: {
+        PostId: pk,
+      },
+    }).then((relation) => {
+      return relation.map((r) => r.destroy());
+    });
 
     Image.findAll({
-      where:{
-         PostId:pk
-      }
-    })
-    .then(imgs=>{
-      return imgs.map(i=>i.destroy())
-    })
+      where: {
+        PostId: pk,
+      },
+    }).then((imgs) => {
+      return imgs.map((i) => i.destroy());
+    });
 
     const datFound = await Post.findByPk(pk);
     if (datFound) {
@@ -130,7 +125,6 @@ const updatePosts = async (req, res, next) => {
           });
         });
         await Promise.all(addingImages);
-
       }
       if (updateData.Categories) {
         let addingCategories = updateData.Categories.map((id) => {
@@ -138,19 +132,28 @@ const updatePosts = async (req, res, next) => {
         });
         let categoriesInDB = await Promise.all(addingCategories);
         await datFound.addCategories(categoriesInDB);
-
       }
 
-      res.status(200).json({ msg: "post update" });
+      res.status(200).json({ msg: 'post update' });
       return;
     } else {
-      res.status(400).json({ msg: "el post no existe" });
+      res.status(400).json({ msg: 'el post no existe' });
     }
   } catch (error) {
     console.log(error);
-    res.status(400).json({ msg: "error" });
+    res.status(400).json({ msg: 'error' });
   }
 };
+async function changeStatus(req, res) {
+  try {
+    let { id ,status } = req.body;
+    let foundPost = await Post.findByPk(id)
+    foundPost.update({postStatus: status})
+    res.status(400).json({ msg: 'post Not found' });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 const deletePosts = async (req, res, next) => {
   //asumiendo llave primaria id
@@ -160,10 +163,10 @@ const deletePosts = async (req, res, next) => {
     const datFound = await Post.findByPk(pk);
     if (datFound) {
       datFound.destroy();
-      res.status(200).json({ msg: "Post Destroyed" });
+      res.status(200).json({ msg: 'Post Destroyed' });
       return;
     }
-    res.status(400).json({ msg: "post not found" });
+    res.status(400).json({ msg: 'post not found' });
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: error });
@@ -174,13 +177,13 @@ async function getPostById(req, res) {
   try {
     let { id } = req.params;
     let foundPost = await Post.findByPk(id, {
-      where:{
-        status:true
+      where: {
+        status: true,
       },
-      include: [User, Image,Category,Question],
+      include: [User, Image, Category, Question],
     });
-    if(foundPost) return res.json(foundPost);
-    res.status(400).json({msg:'post Not found'})
+    if (foundPost) return res.json(foundPost);
+    res.status(400).json({ msg: 'post Not found' });
   } catch (err) {
     console.log(err);
   }
@@ -194,9 +197,9 @@ const adminGetPosts = async (req, res, next) => {
         where: {
           name: {
             [Op.iLike]: `%${name}%`,
-          }
+          },
         },
-        include: [User, Image,Category, Question],
+        include: [User, Image, Category, Question],
       });
       return res.json(posts);
     }
@@ -207,8 +210,8 @@ const adminGetPosts = async (req, res, next) => {
     res.status(200).json(dataFound);
     return;
   } catch (error) {
-    res.status(500).json({ msg: "error" });
-    console.log("Error", Error);
+    res.status(500).json({ msg: 'error' });
+    console.log('Error', Error);
     return;
   }
 };
@@ -219,5 +222,6 @@ module.exports = {
   deletePosts,
   createPosts,
   getPostById,
-  adminGetPosts
+  adminGetPosts,
+  changeStatus
 };
