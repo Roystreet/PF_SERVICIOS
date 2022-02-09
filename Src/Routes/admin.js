@@ -6,10 +6,7 @@ const {
   getPostById,
   createPosts,
   adminGetPosts,
-<<<<<<< HEAD
   changeStatus
-=======
->>>>>>> c0c23c40225779d622aecfe1e8939ce0ef7ccb69
 } = require("../Controllers/PostControllers");
 const {
   getUsers,
@@ -56,7 +53,7 @@ router.delete("/category/:id", deleteCategory);
 // Route Orders
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
-router.put("/order", updateStatusOrder);
+router.put("/order/:id", updateStatusOrder);
 // Route email
 router.get("/email", sendEmail);
 // Route Review
