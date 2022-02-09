@@ -21,19 +21,18 @@ const postCategory = async (req, res, next) => {
 const deleteCategory = async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const data = Category.findByPk(parseInt(id));
-		if (data.name) {
+		
+		const data = Category.findByPk(id);
+		if (data) {
 			await Category.destroy({
 				where: {
 					id: id
 				}
 			});
 			res.status(200).json({ msg: 'Category deleted successfully' });
-		} else {
-			res.status(404).json({ msg: 'Category not found' });
-		}
+		} 
 	} catch (err) {
-		console.error(err);
+		res.status(400).json({err})
 	}
 };
 
