@@ -74,7 +74,7 @@ const getOrderUser = async (req, res) => {
 };
 
 const updateStatusOrder = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const { status } = req.body;
     const order = await Order.findByPk(parseInt(req.params.id));
@@ -137,9 +137,9 @@ const transOrder = async (item, payer) => {
       .reduce((acc, item) => acc + item);
     const order = await Order.create(
       {
-        delivery_adress: payer.address.street_name || "direccion de prueba ",
+        delivery_adress: payer.address.street_name,
         total: totalOrder,
-        UserId: payer.id || 1,
+        UserId: payer.id,
       },
       { transaction: t }
     );
