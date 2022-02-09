@@ -2,6 +2,7 @@
 const Post = require("./Src/Models/Post");
 let sequelize = require("./Src/Models/index")
 console.log(sequelize.models);
+const productsWithImages = require('./images');
 var itCategories = 1
 function idRamdom(max) {
      if (itCategories==16) {
@@ -42,6 +43,9 @@ async function joinPostCategories() {
 
 
 }
+setTimeout(()=>{
+  productsWithImages()
+},12000)
 setTimeout(()=>{
   joinPostCategories()
 },20000)

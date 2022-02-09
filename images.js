@@ -5,7 +5,7 @@ var Token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5pY29sYXMiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTY0NDI4NDI1OSwiZXhwIjoxNjQ0MzcwNjU5fQ.QTmOgTwnCc6F1tGFTfjsY4FjfY-3lbFO62sK2O_9Ibo";
 function create_post(payload, token) {
   return axios
-    .post("https://api-ec.herokuapp.com/api/admin/post", payload, {
+    .post("http://127.0.0.1:4000/api/admin/post", payload, {
       headers: {
         "token": token,
         "content-type": "application/json",
@@ -49,7 +49,8 @@ function productsWithImages() {
           "ratingProm": p.ratingProm,
           "status": p.status,
           "UserId": p.UserId,
-          "Images": p.Images.map(i=>i.link)
+          "Images": p.Images.map(i=>i.link),
+          "Categories":p.Categories.map(i=>i.id)
 
         },
         Token
@@ -60,4 +61,5 @@ function productsWithImages() {
   }
 
 }
+
 module.exports = productsWithImages
