@@ -1,4 +1,4 @@
-const sequelize = require("../Database");
+const sequelize = require("../database");
 const {
   DataTypes
 } = require("sequelize");
@@ -30,6 +30,11 @@ const Post = sequelize.define("Post", {
     type: DataTypes.BOOLEAN, // TODO: estado del porducto nuevo/usado?
     defaultValue: true,
   },
+  postStatus:{
+    type:DataTypes.ENUM('Activo','Inactivo'),
+    defaultValue:'Inactivo',
+    allowNull:false,
+  }
 });
 User.hasMany(Post, {
   foreignKey: "UserId",
