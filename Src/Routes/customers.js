@@ -9,7 +9,7 @@ const {
   deleteQuestion,
 } = require("../Controllers/QuestionController");
 
-router.get("/order-user", getOrderForUser);
+router.get("/order-user/:id", getOrderForUser);
 router.get("/order-detail/:id", getOrderDetailId);
 router.post("/question", createQuestion);
 router.put("/question", replyQuestion);
