@@ -36,6 +36,8 @@ const emailRegister = async (req, res) => {};
 
 const emailOrder = async (req, res) => {};
 
+const emailStatus = (status, user) => {};
+
 module.exports = {
   sendEmail,
 };

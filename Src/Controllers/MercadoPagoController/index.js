@@ -10,9 +10,8 @@ mercadopago.configure({
 });
 
 const createPreference = async (req, res) => {
-
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const preference = {
       items: req.body.item,
       payer: {
@@ -32,7 +31,6 @@ const createPreference = async (req, res) => {
       auto_return: "approved",
     };
 
-
     const chargeData = await mercadopago.preferences.create(preference);
     //  console.log(chargeData);
     res
@@ -48,6 +46,7 @@ const feedback = async (req, res) => {
     const { status, preference_id } = req.query;
     //console.log(data);
     // res.redirect("http://localhost:3000/");
+    console.log(status);
     if (status == "approved") {
       const preference = await axios.get(`${urlMp}/${preference_id}`, {
         headers: {
@@ -55,14 +54,14 @@ const feedback = async (req, res) => {
         },
       });
       const { items, payer, metadata } = preference.data;
-      console.log(items);
-      console.log(payer);
+      // console.log(items);
+      // console.log(payer);
       //realizamos la transacción
       await transOrder(items, payer, metadata);
 
       // console.log(items, payer);
       res.redirect("http://localhost:3000/checkout/success");
-    } else if (status == "failure") {
+    } else if (status == "rejected") {
       res.redirect("http://localhost:3000/checkout/failure");
     } else {
       res.redirect("http://localhost:3000/checkout/pending");
