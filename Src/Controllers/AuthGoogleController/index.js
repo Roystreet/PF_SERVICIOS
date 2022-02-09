@@ -16,6 +16,7 @@ const GoogleAuth = async (req, res) => {
       },
     });
     if (user) {
+      user.update({image:data.picture})
       return res.status(200).json({
         msg: "user logged",
         token: token,
@@ -24,11 +25,12 @@ const GoogleAuth = async (req, res) => {
         first_name: user.first_name,
         last_name: user.last_name,
         rol: user.role,
+        image: user.image,
       });
     }
 
     const dat = {
-      username: data.email,
+      username: data.given_name,
       email: data.email,
       first_name: data.given_name,
       last_name: data.family_name,

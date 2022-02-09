@@ -8,7 +8,10 @@ const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
 const password = bcrypt.hashSync("1234", salt);
 
-//require('./images.js');
+
+
+// require('./images.js');
+
 
 var country = Country;
 let descriptionText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie felis eget purus sagittis sodales quis id eros. Cras viverra ligula nec nibh consequat posuere. Proin dignissim, velit a blandit placerat, velit quam porta enim, sodales mattis dolor nisi non sapien. Pellentesque ac dui et urna venenatis mollis in eget nibh. Donec in est bibendum, interdum ex id, dictum mi. Vestibulum maximus justo non mollis interdum. Suspendisse at lacus quis augue fringilla finibus eu id ex. Phasellus aliquet mi ut arcu congue egestas. Proin vehicula est eget nunc imperdiet semper. In vitae lorem eget eros efficitur varius. Nulla non diam feugiat libero convallis finibus. Nullam sit amet mi quis nunc vestibulum fringilla. Ut vel arcu vehicula, maximus lacus suscipit, lacinia lectus. Suspendisse sed consectetur nisl. Nullam vel nunc at odio pulvinar mollis eu ac felis. Etiam mattis mauris sem.`;
