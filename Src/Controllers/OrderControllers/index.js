@@ -126,7 +126,7 @@ const getOrderForUser = async (req, res) => {
   }
 };
 
-const transOrder = async (item, payer) => {
+const transOrder = async (item, payer, metadata) => {
   const t = await sequelize.transaction();
   try {
     // iniciamos la transaccion
@@ -134,11 +134,12 @@ const transOrder = async (item, payer) => {
     const totalOrder = item
       .map((data) => data.quantity * data.unit_price)
       .reduce((acc, item) => acc + item);
+
     const order = await Order.create(
       {
         delivery_adress: payer.address.street_name || "direccion de prueba ",
         total: totalOrder,
-        UserId: payer.id || 1,
+        UserId: metadata.id,
       },
       { transaction: t }
     );
