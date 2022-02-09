@@ -10,7 +10,7 @@ const password = bcrypt.hashSync("1234", salt);
 
 
 
-// require('./images.js');
+//require('./images.js');
 
 
 var country = Country;
