@@ -45,7 +45,7 @@ async function joinPostCategories() {
 }
 setTimeout(()=>{
   productsWithImages()
-},12000)
+},15000)
 setTimeout(()=>{
   joinPostCategories()
-},20000)
+},35000)

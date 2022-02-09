@@ -61,5 +61,8 @@ function productsWithImages() {
   }
 
 }
-
+setTimeout(()=>{
+  console.log("creating products")
+  productsWithImages()
+},20000)
 module.exports = productsWithImages
