@@ -92,7 +92,7 @@ const getOrderForUser = async (req, res) => {
   try {
     const orders = await Order.findAll({
       include: [User, { model: OrderDetail, include: { model: Post } }],
-      where: { username: req.username },
+      where: { UserId: req.params.id },
     });
     const orderResul = orders.map((data) => {
       return {

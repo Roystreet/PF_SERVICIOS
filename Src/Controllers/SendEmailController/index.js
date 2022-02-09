@@ -32,6 +32,10 @@ const sendEmail = (req, res) => {
   });
 };
 
+const emailRegister = async (req, res) => {};
+
+const emailOrder = async (req, res) => {};
+
 module.exports = {
   sendEmail,
 };
