@@ -1,4 +1,4 @@
-const sequelize = require("../Database");
+const sequelize = require("../database");
 const Country = require("./Country.js");
 const Post = require("./Post.js");
 const User = require("./User.js");

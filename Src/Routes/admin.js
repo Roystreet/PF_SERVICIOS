@@ -6,10 +6,8 @@ const {
   getPostById,
   createPosts,
   adminGetPosts,
-<<<<<<< HEAD
   changeStatus
-=======
->>>>>>> c0c23c40225779d622aecfe1e8939ce0ef7ccb69
+
 } = require("../Controllers/PostControllers");
 const {
   getUsers,
