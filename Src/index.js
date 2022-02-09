@@ -1,5 +1,5 @@
 const app = require("./app");
-const sequelize = require("./Database");
+const sequelize = require("./database");
 require("../downloadCountries");
 
 app.listen(app.get("PORT"), async () => {
@@ -8,7 +8,7 @@ app.listen(app.get("PORT"), async () => {
     console.log("database is ready");
     await sequelize.sync({
 
-      force: true,
+      force: false,
 
     });
     console.log("server on port " + app.get("PORT"));

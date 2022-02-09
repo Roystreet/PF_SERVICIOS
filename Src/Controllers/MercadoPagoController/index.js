@@ -10,6 +10,7 @@ mercadopago.configure({
 });
 
 const createPreference = async (req, res) => {
+
   try {
     console.log(req.body);
     const preference = {
@@ -30,6 +31,7 @@ const createPreference = async (req, res) => {
       },
       auto_return: "approved",
     };
+
 
     const chargeData = await mercadopago.preferences.create(preference);
     //  console.log(chargeData);
