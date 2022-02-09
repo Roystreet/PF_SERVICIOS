@@ -48,6 +48,7 @@ function productsWithImages() {
           "ratingProm": p.ratingProm,
           "status": p.status,
           "UserId": p.UserId,
+          "postStatus":"Activo",
           "Images": p.Images.map(i=>i.link),
           "Categories":p.Categories.map(i=>i.id)
 
