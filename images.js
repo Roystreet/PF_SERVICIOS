@@ -13,7 +13,7 @@ function create_post(payload, token) {
     })
     .then((response) => response.data)
     .then((json) => {
-      console.log(json);
+      console.log("succes");
     })
     .catch((e) => console.error(e));
 }
@@ -39,20 +39,25 @@ let obj = {
 //create_post(obj,Token);
 
 function productsWithImages() {
-      posts.map(p=>{
-        return create_post({
-            "name": p.name,
-            "description":p.description,
-            "price": p.price,
-            "stock": p.stock,
-            "ratingProm": p.ratingProm,
-            "status": p.status,
-            "UserId": p.UserId,
-            "Images": p.Images.map(i=>i.link)
+  try {
+    posts.map(p=>{
+      return create_post({
+          "name": p.name,
+          "description":p.description,
+          "price": p.price,
+          "stock": p.stock,
+          "ratingProm": p.ratingProm,
+          "status": p.status,
+          "UserId": p.UserId,
+          "Images": p.Images.map(i=>i.link)
 
-          },
-          Token
-      )
-      })
+        },
+        Token
+    )
+    })
+  } catch (e) {
+    console.log("Actualiza el token de los scripts");
+  }
+
 }
-productsWithImages()
+module.exports = productsWithImages

@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
 const password = bcrypt.hashSync("1234", salt);
+const productsWithImages = require('./images');
 
 require('./postCategories.js');
 
@@ -86,6 +87,7 @@ async function paddingData() {
               "https://i.pinimg.com/564x/49/c5/33/49c53331d19be74b52d47fcce7e97468.jpg",
           }
         );
+        productsWithImages()
       }, 8000);
 
     }
