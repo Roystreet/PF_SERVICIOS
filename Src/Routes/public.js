@@ -7,7 +7,7 @@ const {
   getPostById,
   getPostUsers,
 } = require("../Controllers/PostControllers");
-const { createUsers, logIn } = require("../Controllers/UserControllers");
+const { createUsers, logIn, getUsersById } = require("../Controllers/UserControllers");
 const { getCategories } = require("../Controllers/CategoryControllers");
 const {
   createPreference,
@@ -25,6 +25,8 @@ router.get("/postbyuser/:userId", getPostUsers);
 // Users
 router.post("/register", createUsers);
 router.post("/login", logIn);
+router.get("/user/:id", getUsersById);
+
 // Category
 router.get("/category", getCategories);
 //
