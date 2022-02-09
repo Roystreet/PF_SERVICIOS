@@ -8,7 +8,7 @@ app.listen(app.get("PORT"), async () => {
     console.log("database is ready");
     await sequelize.sync({
 
-      force: false,
+      force: true,
 
     });
     console.log("server on port " + app.get("PORT"));
