@@ -14,8 +14,8 @@ const {
   feedback,
 } = require("../Controllers/MercadoPagoController");
 const { GoogleAuth } = require("../Controllers/AuthGoogleController");
-
-// Country
+let {getReviewByPost} = require("../Controllers/ReviewController/index.js");
+  // Country
 router.get("/countries", getCountries);
 // Post
 router.get("/post?name", getPosts);
@@ -38,4 +38,7 @@ router.post("/decoderGoogle", GoogleAuth)
 router.post("/auth/callback", async (req, res) => {
   res.status(200).redirect("http://localhost:3000/");
 })
+
+router.get("/review/:id", getReviewByPost);
+
 module.exports = router;
