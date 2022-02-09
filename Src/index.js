@@ -1,6 +1,8 @@
 const app = require("./app");
 const sequelize = require("./database");
+
 //require("../downloadCountries");
+
 
 app.listen(app.get("PORT"), async () => {
   try {

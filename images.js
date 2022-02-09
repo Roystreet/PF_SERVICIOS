@@ -1,7 +1,9 @@
 const posts = require("./post (1).json");
 const axios = require("axios");
 
+
 var Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5pY29sYXMiLCJyb2wiOiJhZG1pbiIsImlhdCI6MTY0NDM3ODY5NCwiZXhwIjoxNjQ0NDY1MDk0fQ.EoW7BHGGVSvHQuiILO218ITOvCC7cUVlDBQ1MZGhKbk";
+
 function create_post(payload, token) {
   return axios
     .post("http://127.0.0.1:4000/api/admin/post", payload, {
