@@ -2,7 +2,7 @@
 const User = require('../../Models/User');
 const Country = require('../../Models/Country');
 const { generateToken } = require('../jwtController');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
 

@@ -26,7 +26,7 @@ function decodeToken(token) {
 const jwtMiddleware = async (req, res, next) => {
   //recibiendo el token de la cabecera
   const token = req.headers["token"];
-  if (token) {
+  if (token !== "null") {
     //verificando que el token sea correcto
     const verified = verifyToken(token);
     if (verified) {

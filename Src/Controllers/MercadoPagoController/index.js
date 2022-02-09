@@ -17,9 +17,9 @@ const createPreference = async (req, res) => {
       id: req.body.id,
     },
     back_urls: {
-      success: "http://localhost:4000/api/feedback",
-      failure: "http://localhost:4000/api/feedback",
-      pending: "http://localhost:4000/api/feedback",
+      success: "https://api-ec.herokuapp.com/api/feedback",
+      failure: "https://api-ec.herokuapp.com/api/feedback",
+      pending: "https://api-ec.herokuapp.com/api/feedback",
     },
     auto_return: "approved",
   };
@@ -44,11 +44,11 @@ const feedback = async (req, res) => {
     await transOrder(items, payer);
 
     // console.log(items, payer);
-    res.redirect("http://localhost:3000/checkout/success");
+    res.redirect("http://Kwik-e-mart.netlify.com/checkout/success");
   } else if (status == "failure") {
-    res.redirect("http://localhost:3000/checkout/failure");
+    res.redirect("http://Kwik-e-mart.netlify.com/checkout/failure");
   } else {
-    res.redirect("http://localhost:3000/checkout/pending");
+    res.redirect("http://Kwik-e-mart.netlify.com/checkout/pending");
   }
 };
 
