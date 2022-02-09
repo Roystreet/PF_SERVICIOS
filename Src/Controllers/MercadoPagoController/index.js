@@ -10,45 +10,65 @@ mercadopago.configure({
 });
 
 const createPreference = async (req, res) => {
-  console.log(req.body.item);
-  const preference = {
-    items: req.body.item,
-    payer: {
-      id: req.body.id,
-    },
-    back_urls: {
-      success: "https://api-ec.herokuapp.com/api/feedback",
-      failure: "https://api-ec.herokuapp.com/api/feedback",
-      pending: "https://api-ec.herokuapp.com/api/feedback",
-    },
-    auto_return: "approved",
-  };
 
-  const chargeData = await mercadopago.preferences.create(preference);
-  console.log(chargeData);
-  res.status(200).json({ res: chargeData.body.init_point }); //status(200).json({ res: chargeData.body.init_point });
+  try {
+    console.log(req.body);
+    const preference = {
+      items: req.body.item,
+      payer: {
+        address: {
+          street_name: req.body.payer.address.street_name,
+        },
+        email: req.body.payer.email,
+      },
+      metadata: {
+        id: req.body.payer.id,
+      },
+      back_urls: {
+        success: "http://localhost:4000/api/feedback",
+        failure: "http://localhost:4000/api/feedback",
+        pending: "http://localhost:4000/api/feedback",
+      },
+      auto_return: "approved",
+    };
+
+
+    const chargeData = await mercadopago.preferences.create(preference);
+    //  console.log(chargeData);
+    res
+      .status(200)
+      .json({ res: chargeData.body.init_point, userid: req.body.payer.id }); //status(200).json({ res: chargeData.body.init_point });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const feedback = async (req, res) => {
-  const { status, preference_id } = req.query;
-  //console.log(data);
-  // res.redirect("http://localhost:3000/");
-  if (status == "approved") {
-    const preference = await axios.get(`${urlMp}/${preference_id}`, {
-      headers: {
-        Authorization: `Bearer ${accesMp}`,
-      },
-    });
-    const { items, payer } = preference.data;
-    //realizamos la transacción
-    await transOrder(items, payer);
+  try {
+    const { status, preference_id } = req.query;
+    //console.log(data);
+    // res.redirect("http://localhost:3000/");
+    if (status == "approved") {
+      const preference = await axios.get(`${urlMp}/${preference_id}`, {
+        headers: {
+          Authorization: `Bearer ${accesMp}`,
+        },
+      });
+      const { items, payer, metadata } = preference.data;
+      console.log(items);
+      console.log(payer);
+      //realizamos la transacción
+      await transOrder(items, payer, metadata);
 
-    // console.log(items, payer);
-    res.redirect("http://Kwik-e-mart.netlify.com/checkout/success");
-  } else if (status == "failure") {
-    res.redirect("http://Kwik-e-mart.netlify.com/checkout/failure");
-  } else {
-    res.redirect("http://Kwik-e-mart.netlify.com/checkout/pending");
+      // console.log(items, payer);
+      res.redirect("http://localhost:3000/checkout/success");
+    } else if (status == "failure") {
+      res.redirect("http://localhost:3000/checkout/failure");
+    } else {
+      res.redirect("http://localhost:3000/checkout/pending");
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
