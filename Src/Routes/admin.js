@@ -7,7 +7,6 @@ const {
   createPosts,
   adminGetPosts,
   changeStatus
-
 } = require("../Controllers/PostControllers");
 const {
   getUsers,
@@ -54,7 +53,7 @@ router.delete("/category/:id", deleteCategory);
 // Route Orders
 router.get("/orders", getOrders);
 router.get("/order/:id", getOrderId);
-router.put("/order", updateStatusOrder);
+router.put("/order/:id", updateStatusOrder);
 // Route email
 router.get("/email", sendEmail);
 // Route Review
