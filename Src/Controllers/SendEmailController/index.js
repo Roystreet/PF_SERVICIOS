@@ -47,11 +47,53 @@ const emailRegister = async (email) => {
   }
 };
 
-const emailOrder = async () => {};
+const emailOrder = async (email) => {
+  try {
+    const mailOptions = {
+      from: "Kwik-E-Mart",
+      to: email,
+      subject: "Bienvenido a Kwik-E-Mart",
+      text: " Su compra se ha realizado de manera exitosa",
+    };
 
-const emailStatus = (status, user) => {};
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const emailStatus = async (status, email) => {
+  try {
+    if (status == "procesada") {
+      const mailOptions = {
+        from: "Kwik-E-Mart",
+        to: email,
+        subject: "Bienvenido a Kwik-E-Mart",
+        text: " muchas gracias por su preferencia su producto esta siendo procesada",
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log(" procesada de manera exitosa");
+    }
+    if (status == "completada") {
+      const mailOptions = {
+        from: "Kwik-E-Mart",
+        to: email,
+        subject: "Bienvenido a Kwik-E-Mart",
+        text: " Su producto ha sido entregado de manera exitosa",
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log(" completada de manera exitosa");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = {
   sendEmail,
   emailRegister,
+  emailStatus,
+  emailOrder,
 };

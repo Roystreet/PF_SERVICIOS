@@ -2,6 +2,8 @@ const mercadopago = require("mercadopago");
 const axios = require("axios").default;
 const urlMp = "https://api.mercadopago.com/checkout/preferences";
 const { transOrder } = require("../OrderControllers/index");
+const { emailOrder } = require("../SendEmailController");
+const User = require("../../Models/User");
 const accesMp =
   "TEST-8815536356433300-012714-798045927f1e8d0e17b1412b6152bf2c-653565141";
 mercadopago.configure({
@@ -58,7 +60,9 @@ const feedback = async (req, res) => {
       // console.log(payer);
       //realizamos la transacción
       await transOrder(items, payer, metadata);
-
+      const user = await User.findByPk(Number(metadata.id));
+      console.log(user.dataValues.email);
+      await emailOrder(user.dataValues.email);
       // console.log(items, payer);
       res.redirect("http://localhost:3000/checkout/success");
     } else if (status == "rejected") {
