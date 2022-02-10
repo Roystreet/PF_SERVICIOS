@@ -79,7 +79,7 @@ const emailStatus = async (status, email) => {
       const mailOptions = {
         from: "Kwik-E-Mart",
         to: email,
-        subject: "Bienvenido a Kwik-E-Mart",
+        subject: " Entrega completada",
         text: " Su producto ha sido entregado de manera exitosa",
       };
 

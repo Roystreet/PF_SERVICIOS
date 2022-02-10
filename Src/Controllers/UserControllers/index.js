@@ -17,9 +17,9 @@ const getUsers = async (req, res) => {
 const getUsersById = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(typeof id);
+    // console.log(typeof id);
     const user = await User.findByPk(parseInt(id), { include: Country });
-    console.log(user);
+    //console.log(user);
 
     if (user) return res.status(200).json(user);
     return res.status(404).json({ msg: "User not found" });
@@ -39,7 +39,7 @@ const createUsers = async (req, res) => {
       dni,
       country,
       password,
-      image
+      image,
     } = req.body;
 
     const hashPassword = await bcrypt.hashSync(password, salt);
@@ -53,7 +53,7 @@ const createUsers = async (req, res) => {
       dni: dni,
       password: hashPassword,
       CountryId: country,
-      image:image
+      image: image,
     });
 
     console.log("user created");
@@ -173,7 +173,7 @@ const logIn = async (req, res) => {
 };
 
 const resetPasswordForce = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const { id, password } = req.body;
 

@@ -19,7 +19,7 @@ const User = sequelize.define("User", {
   },
   email: {
     type: DataTypes.STRING,
-    unique: true
+    unique: true,
   },
   dni: {
     type: DataTypes.STRING,
@@ -35,13 +35,13 @@ const User = sequelize.define("User", {
   role: {
     type: DataTypes.ENUM("user", "admin", "superAdmin"),
     allowNull: false,
-    defaultValue: "user"
+    defaultValue: "user",
   },
   status: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: true
-  }
+    defaultValue: true,
+  },
 });
 
 Country.hasMany(User, {

@@ -23,7 +23,7 @@ const getOrders = async (req, res) => {
           username: data.User.username,
         },
         OrderDetail: data.OrderDetails.map((data) => {
-          console.log(data.Post)
+          // console.log(data.Post)
           return {
             id: data.id,
             amount: data.amount,
@@ -34,7 +34,6 @@ const getOrders = async (req, res) => {
               description: data.Post.description,
               price: data.Post.price,
               UserId: data.Post.UserId,
-
             },
           };
         }),
