@@ -10,7 +10,7 @@ const {
 } = require("../Controllers/QuestionController");
 
 router.get("/order-user/:id", getOrderForUser);
-router.get("/order-detail/:id", getOrderDetailId);
+router.post("/order-detail/:id", getOrderDetailId);
 router.post("/question", createQuestion);
 router.put("/question", replyQuestion);
 router.delete("/question/:id", deleteQuestion);

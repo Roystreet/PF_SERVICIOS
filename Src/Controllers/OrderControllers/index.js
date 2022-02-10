@@ -22,14 +22,18 @@ const getOrders = async (req, res) => {
           username: data.User.username,
         },
         OrderDetail: data.OrderDetails.map((data) => {
+          console.log(data.Post)
           return {
             id: data.id,
             amount: data.amount,
+            UserId: data.Post.UserId,
             posts: {
               id: data.Post.id,
               name: data.Post.name,
               description: data.Post.description,
               price: data.Post.price,
+              UserId: data.Post.UserId,
+
             },
           };
         }),
@@ -176,35 +180,9 @@ const getOrderDetailId = async (req, res) => {
     const { id } = req.params;
     const orders = await Order.findByPk(parseInt(id), {
       include: [User, { model: OrderDetail, include: { model: Post } }],
-      where: { username: req.username },
+      where: { username: req.body.username },
     });
-    const orderResul = orders.map((data) => {
-      return {
-        id: data.id,
-        delivery_adress: data.delivery_address,
-        status: data.status,
-        total: data.total,
-        created: data.createdAt,
-        user: {
-          id: data.User.id,
-          username: data.User.username,
-        },
-        OrderDetail: data.OrderDetails.map((data) => {
-          return {
-            id: data.id,
-            amount: data.amount,
-            posts: {
-              id: data.Post.id,
-              name: data.Post.name,
-              description: data.Post.description,
-              price: data.Post.price,
-            },
-          };
-        }),
-      };
-    });
-
-    res.status(200).json(orderResul);
+    res.status(200).json(orders);
   } catch (err) {
     console.error(err);
   }

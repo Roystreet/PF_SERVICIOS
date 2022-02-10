@@ -7,7 +7,7 @@ const  { CategoryPost}  = require("../../Models/index.js").models;
 const Question = require("../../Models/Question");
 let userIncluded = {
     model: User,
-    attributes: ['username', "id"],
+    attributes: ['username', "id" , 'role'],
 
   }
 
