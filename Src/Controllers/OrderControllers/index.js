@@ -18,10 +18,7 @@ const getOrders = async (req, res) => {
         status: data.status,
         total: data.total,
         created: data.createdAt,
-        user: {
-          id: data.User.id,
-          username: data.User.username,
-        },
+        user: data.User,
         OrderDetail: data.OrderDetails.map((data) => {
           // console.log(data.Post)
           return {
