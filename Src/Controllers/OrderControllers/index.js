@@ -4,6 +4,7 @@ const User = require("../../Models/User");
 const Post = require("../../Models/Post");
 const OrderDetail = require("../../Models/OrderDetail");
 const sequelize = require("../../database");
+const { emailStatus } = require("../SendEmailController");
 
 const getOrders = async (req, res) => {
   try {
@@ -57,7 +58,7 @@ const getOrderId = async (req, res) => {
         msg: "Order not found",
       });
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 };
 
@@ -70,7 +71,7 @@ const getOrderUser = async (req, res) => {
       },
       include: Post,
     });
-    console.log(orderCustomer);
+    // console.log(orderCustomer);
     res.status(200).json(orderCustomer);
   } catch (err) {
     console.log(err);
@@ -81,10 +82,14 @@ const updateStatusOrder = async (req, res) => {
   console.log(req.body);
   try {
     const { status } = req.body;
-    const order = await Order.findByPk(parseInt(req.params.id));
+    const order = await Order.findByPk(parseInt(req.params.id), {
+      include: User,
+    });
     if (order) {
+      console.log(order.dataValues.User.dataValues.email);
       await Order.update({ status: status }, { where: { id: req.params.id } });
-      res.json({ msg: "Order updated successfully" });
+      await emailStatus(status, order.dataValues.User.dataValues.email);
+      await res.json({ msg: "Order updated successfully" });
     } else {
       res.json({ msg: "Order not found" });
     }
@@ -146,13 +151,14 @@ const transOrder = async (item, payer, metadata) => {
         total: totalOrder,
 
         UserId: metadata.id,
-
       },
       { transaction: t }
     );
     // llenar la base de detalle
     // const orderDetail
     console.log("transaccion" + order.id);
+
+    //
     const promises = [];
     for (let i = 0; i < item.length; i++) {
       const ordenDetail = OrderDetail.create(
