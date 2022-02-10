@@ -165,6 +165,21 @@ const transOrder = async (item, payer, metadata) => {
         },
         { transaction: t }
       );
+
+      let updateStock = await Post.findByPk(item[i].id);
+      let stock = updateStock.dataValues.stock - item[i].quantity;
+      console.log(stock);
+      await Post.update(
+        {
+          stock: stock,
+        },
+        {
+          where: {
+            id: item[i].id,
+          },
+          transaction: t,
+        }
+      );
       promises.push(ordenDetail);
     }
     await Promise.all(promises);
