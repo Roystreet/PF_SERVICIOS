@@ -13,10 +13,10 @@ const config = {
 
 const transporter = nodemailer.createTransport(config);
 
-const sendEmail = (req, res) => {
+const sendEmail = (user) => {
   let mailOptions = {
     from: "PRueba de remitente",
-    to: "rbracamonte.winhold@gmail.com",
+    to: user,
     subject: "Pruebas",
     text: " prueba numero uno de envio de email",
   };
@@ -32,12 +32,26 @@ const sendEmail = (req, res) => {
   });
 };
 
-const emailRegister = async (req, res) => {};
+const emailRegister = async (email) => {
+  try {
+    const mailOptions = {
+      from: "Kwik-E-Mart",
+      to: email,
+      subject: "Bienvenido a Kwik-E-Mart",
+      text: " Su registro en Kwik-E-Mart ha sido realizado de manera exitosa",
+    };
 
-const emailOrder = async (req, res) => {};
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const emailOrder = async () => {};
 
 const emailStatus = (status, user) => {};
 
 module.exports = {
   sendEmail,
+  emailRegister,
 };

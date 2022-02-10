@@ -1,10 +1,11 @@
 // Users
-const User = require('../../Models/User');
-const Country = require('../../Models/Country');
-const { generateToken } = require('../jwtController');
-const bcrypt = require('bcryptjs');
+const User = require("../../Models/User");
+const Country = require("../../Models/Country");
+const { generateToken } = require("../jwtController");
+const bcrypt = require("bcryptjs");
 const saltRound = 10;
 const salt = bcrypt.genSaltSync(saltRound);
+const { emailRegister } = require("../SendEmailController");
 
 const getUsers = async (req, res) => {
   const users = await User.findAll({
@@ -21,7 +22,7 @@ const getUsersById = async (req, res) => {
     console.log(user);
 
     if (user) return res.status(200).json(user);
-    return res.status(404).json({ msg: 'User not found' });
+    return res.status(404).json({ msg: "User not found" });
   } catch (err) {
     console.log(err);
   }
@@ -53,7 +54,8 @@ const createUsers = async (req, res) => {
       CountryId: country,
     });
 
-    console.log('user created');
+    console.log("user created");
+    await emailRegister(email);
 
     res.status(200).json(user);
   } catch (err) {
@@ -70,52 +72,52 @@ const updateUsers = async (req, res) => {
     });
 
     switch (type) {
-      case 'NAME':
+      case "NAME":
         data.update({
           first_name: input,
         });
         break;
-      case 'LASTNAME':
+      case "LASTNAME":
         data.update({
           last_name: input,
         });
         break;
-      case 'USERNAME':
+      case "USERNAME":
         data.update({
           username: input,
         });
         break;
-      case 'DNI':
+      case "DNI":
         data.update({
           dni: input,
         });
         break;
-      case 'EMAIL':
+      case "EMAIL":
         data.update({
           email: input,
         });
         break;
-      case 'PHONE':
+      case "PHONE":
         data.update({
           phone: input,
         });
         break;
-      case 'ROLE':
+      case "ROLE":
         data.update({
           role: input,
         });
         break;
-      case 'PASSWORD':
+      case "PASSWORD":
         const hashPassword = await bcrypt.hashSync(input, salt);
         data.update({
           password: hashPassword,
         });
         break;
-        case "IMAGE":
-          data.update({
-            image: input,
-          });
-          break;
+      case "IMAGE":
+        data.update({
+          image: input,
+        });
+        break;
       // Also missing country section, pending if country can or can not be changed
       default:
         break;
@@ -124,7 +126,7 @@ const updateUsers = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      msg: 'error',
+      msg: "error",
     });
   }
 };
@@ -133,12 +135,12 @@ const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const data = await User.findByPk(id)
+    const data = await User.findByPk(id);
     data.update({
-      status: false
-    })
+      status: false,
+    });
 
-    res.status(200).json({ msg: 'change success' });
+    res.status(200).json({ msg: "change success" });
   } catch (err) {
     console.log(err);
   }
@@ -151,7 +153,7 @@ const logIn = async (req, res) => {
   if (user) {
     if (bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
-        msg: 'user logged',
+        msg: "user logged",
 
         token: generateToken({ username: username, rol: user.role }),
         id: user.id,
@@ -161,10 +163,10 @@ const logIn = async (req, res) => {
         rol: user.role,
       });
     } else {
-      res.json({ msg: 'Wrong Password' });
+      res.json({ msg: "Wrong Password" });
     }
   } else {
-    res.json({ msg: 'Username not found' });
+    res.json({ msg: "Username not found" });
   }
 };
 
@@ -185,13 +187,13 @@ const resetPasswordForce = async (req, res) => {
           },
         }
       );
-      res.status(200).json({ msg: 'Password Restore ' });
+      res.status(200).json({ msg: "Password Restore " });
     } else {
-      res.status(404).json({ msg: 'User not found' });
+      res.status(404).json({ msg: "User not found" });
     }
   } catch (err) {
     console.log(err);
-    res.status(404).json({ msg: 'error ' });
+    res.status(404).json({ msg: "error " });
   }
 };
 
