@@ -144,9 +144,9 @@ const transOrder = async (item, payer, metadata) => {
     const order = await Order.create(
       {
         delivery_adress: payer.address.street_name,
-        total: totalOrder,
+        total: Number(totalOrder),
 
-        UserId: metadata.id,
+        UserId: Number(metadata.id),
       },
       { transaction: t }
     );
@@ -157,7 +157,7 @@ const transOrder = async (item, payer, metadata) => {
     //
     const promises = [];
     for (let i = 0; i < item.length; i++) {
-      const ordenDetail = OrderDetail.create(
+      const ordenDetail =  OrderDetail.create(
         {
           PostId: item[i].id,
           OrderId: order.id,

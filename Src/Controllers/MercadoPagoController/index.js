@@ -26,9 +26,9 @@ const createPreference = async (req, res) => {
         id: req.body.payer.id,
       },
       back_urls: {
-        success: "http://localhost:4000/api/feedback",
-        failure: "http://localhost:4000/api/feedback",
-        pending: "http://localhost:4000/api/feedback",
+        success: "https://api-ec.herokuapp.com/api/feedback",
+        failure: "https://api-ec.herokuapp.com/api/feedback",
+        pending: "https://api-ec.herokuapp.com/api/feedback",
       },
       auto_return: "approved",
     };
